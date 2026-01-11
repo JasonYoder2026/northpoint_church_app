@@ -51,12 +51,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Welcome Back',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 32),
               Image.asset('assets/images/Logo.png', height: 125),
+              const SizedBox(height: 32),
+              Text(
+                'Welcome!',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
               LoginForm(
                 emailController: emailController,
                 passwordController: passwordController,
