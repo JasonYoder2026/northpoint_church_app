@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:northpoint_church_app/features/splash/splash_page.dart';
 import 'core/theme/app_theme.dart';
-import 'package:northpoint_church_app/features/home/home.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,7 +13,7 @@ class App extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      home: const HomePage(),
+      home: const SplashPage(),
     );
   }
 }
