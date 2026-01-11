@@ -106,3 +106,5 @@ flutter_native_splash:
   image: assets/images/Logo.png
   android: true
   ios: true
+  android_gravity: center
+  ios_content_mode: scaleAspectFit
