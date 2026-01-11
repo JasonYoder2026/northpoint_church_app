@@ -37,11 +37,13 @@ dependencies:
 
   go_router: ^17.0.0
 
-  flutter_native_splash: ^2.4.7
 
   dio: ^5.9.0
 
   flutter_dotenv: ^6.0.0
+
+  get_it: 9.0.2
+
 
   
 
@@ -52,6 +54,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.2.14
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -104,8 +107,12 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
   color: "#0D1B2A"
-  image: assets/images/Logo.png
+  image: assets/images/splash-logo.png
+  android_12:
+    color: "#006F64"
+    image: assets/images/splash-logo.png
   android: true
   ios: true
   android_gravity: center
   ios_content_mode: scaleAspectFit
+  

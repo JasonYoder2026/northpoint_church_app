@@ -1,19 +1,24 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 
-class SupabaseService {
-  SupabaseClient get client => Supabase.instance.client;
+class SupabaseService extends SupabaseProvider {
+  final SupabaseClient client;
 
-  /// Initialize Supabase
-  static Future<void> init() async {
-    await Supabase.initialize(
-      url: dotenv.env['SUPABASE_URL']!,
-      anonKey: dotenv.env['SUPABASE_PUBLISHABLE']!,
-    );
+  SupabaseService({required this.client});
+
+  @override
+  Future<SupabaseClient?> getCurrentSession() async {
+    return client;
   }
 
-  /// Restore session if there is one
-  Future<void> restoreSession() async {
-    final session = Supabase.instance.client.auth.currentSession;
+  @override
+  Future<String?> getCurrentToken() async {
+    final session = client.auth.currentSession;
+    return session?.accessToken;
+  }
+
+  @override
+  Future<void> signOut() async {
+    await client.auth.signOut();
   }
 }
