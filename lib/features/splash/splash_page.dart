@@ -14,17 +14,6 @@ class SplashPage extends ConsumerStatefulWidget {
 
 class _SplashPageState extends ConsumerState<SplashPage> {
   @override
-  void initState() {
-    super.initState();
-    _checkSession();
-  }
-
-  void _checkSession() {
-    // Trigger your SplashController to check session
-    ref.read(splashControllerProvider.notifier).checkSession();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ref.listen<SplashStatus>(splashControllerProvider, (prev, next) {
       if (next == SplashStatus.authenticated) {

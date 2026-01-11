@@ -10,12 +10,15 @@ enum SplashStatus { loading, authenticated, unauthenticated }
 class SplashController extends Notifier<SplashStatus> {
   @override
   SplashStatus build() {
+    // Trigger check immediately when provider is first read
+    Future.microtask(() => checkSession());
     return SplashStatus.loading;
   }
 
   Future<void> checkSession() async {
     final supabase = GetIt.instance<SupabaseProvider>();
     final SupabaseClient? session = await supabase.getCurrentSession();
+
     if (session == null) {
       state = SplashStatus.unauthenticated;
       return;
@@ -38,16 +41,21 @@ class SplashController extends Notifier<SplashStatus> {
         // log out if expired
         await supabase.signOut();
         state = SplashStatus.unauthenticated;
+        return;
       } else {
         state = SplashStatus.authenticated;
+        return;
       }
     } catch (e) {
       // token invalid or parse failed
       state = SplashStatus.unauthenticated;
+      return;
     }
   }
 }
 
 /// Riverpod 3 provider
 final splashControllerProvider =
-    NotifierProvider<SplashController, SplashStatus>(SplashController.new);
+    NotifierProvider.autoDispose<SplashController, SplashStatus>(
+      SplashController.new,
+    );

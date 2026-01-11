@@ -40,4 +40,9 @@ class SupabaseService extends SupabaseProvider {
   Future<void> signOut() async {
     await client.auth.signOut();
   }
+
+  @override
+  Future<void> restoreSession() async {
+    await client.auth.refreshSession();
+  }
 }

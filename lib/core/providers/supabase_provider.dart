@@ -9,4 +9,5 @@ abstract class SupabaseProvider {
     required String email,
     required String password,
   });
+  Future<void> restoreSession() async {}
 }
