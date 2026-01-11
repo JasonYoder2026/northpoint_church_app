@@ -71,6 +71,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   padding: EdgeInsets.all(16.0),
                   child: CircularProgressIndicator(),
                 ),
+              if (status == LoginStatus.error)
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    'Invalid username or password',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

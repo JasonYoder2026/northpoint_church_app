@@ -13,7 +13,7 @@ class AppColors {
   static const cream = Color(0xFFFFF9F0);
 
   // Light / dark background and surface
-  static const lightBackground = cream;
+  static const lightBackground = Color.fromARGB(255, 245, 243, 239);
   static const lightSurface = Colors.white;
   static const darkBackground = Color(0xFF121212);
   static const darkSurface = Color(0xFF1E1E1E);
