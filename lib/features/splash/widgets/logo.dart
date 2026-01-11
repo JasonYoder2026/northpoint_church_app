@@ -12,7 +12,7 @@ class LogoWidget extends StatelessWidget {
         Image.asset('assets/images/Logo.png', width: 120, height: 120),
         SizedBox(height: 16),
         Text(
-          'Northpoint Church',
+          'NorthPoint Muncie',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,

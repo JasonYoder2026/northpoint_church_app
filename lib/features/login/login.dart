@@ -1,14 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../core/theme/colors.dart';
+import 'login_controller.dart';
+import 'widgets/login_form.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    ref
+        .read(loginControllerProvider.notifier)
+        .login(emailController.text.trim(), passwordController.text.trim());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final status = ref.watch(loginControllerProvider);
+
+    ref.listen<LoginStatus>(loginControllerProvider, (prev, next) {
+      if (next == LoginStatus.success) {
+        context.go('/home'); // navigate on successful login
+      } else if (next == LoginStatus.error) {
+        final error = ref.read(loginControllerProvider.notifier).errorMessage;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(error ?? 'Login failed')));
+      }
+    });
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: AppColors.lightBackground,
       body: Center(
-        child: Text('Welcome to Login', style: TextStyle(fontSize: 24)),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Welcome Back',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 32),
+              Image.asset('assets/images/Logo.png', height: 125),
+              LoginForm(
+                emailController: emailController,
+                passwordController: passwordController,
+                onSubmit: _submit,
+              ),
+              if (status == LoginStatus.loading)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator(),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

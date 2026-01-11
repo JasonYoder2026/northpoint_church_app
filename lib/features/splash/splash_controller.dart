@@ -10,12 +10,11 @@ enum SplashStatus { loading, authenticated, unauthenticated }
 class SplashController extends Notifier<SplashStatus> {
   @override
   SplashStatus build() {
-    final supabase = GetIt.instance<SupabaseProvider>();
-    _checkSession(supabase);
     return SplashStatus.loading;
   }
 
-  Future<void> _checkSession(supabase) async {
+  Future<void> checkSession() async {
+    final supabase = GetIt.instance<SupabaseProvider>();
     final SupabaseClient? session = await supabase.getCurrentSession();
     if (session == null) {
       state = SplashStatus.unauthenticated;
