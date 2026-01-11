@@ -45,4 +45,24 @@ class SupabaseService extends SupabaseProvider {
   Future<void> restoreSession() async {
     await client.auth.refreshSession();
   }
+
+  @override
+  Future<AuthenticationResponses> signup({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    final AuthResponse response = await client.auth.signUp(
+      email: email,
+      password: password,
+      data: {'Display name': name},
+    );
+
+    final user = response.user;
+
+    if (user != null) {
+      return AuthenticationResponses.success;
+    }
+    return AuthenticationResponses.failure;
+  }
 }
