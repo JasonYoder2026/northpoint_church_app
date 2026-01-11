@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:northpoint_church_app/features/splash/splash_page.dart';
+import 'package:northpoint_church_app/core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
 
 class App extends StatelessWidget {
@@ -7,13 +7,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'NorthPoint Church Muncie',
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerConfig: router(),
+      title: 'NorthPoint Church Muncie',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      home: const SplashPage(),
     );
   }
 }
