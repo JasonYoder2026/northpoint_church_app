@@ -60,7 +60,7 @@ class LoginForm extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () {
-                context.go("/signup");
+                context.push("/signup");
               },
               child: const Text(
                 'Don\'t have an account? Sign Up!',
