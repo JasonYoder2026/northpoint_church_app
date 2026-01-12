@@ -36,6 +36,7 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 16),
           Material(
             elevation: 4,
             shadowColor: Colors.black.withValues(alpha: 0.5),

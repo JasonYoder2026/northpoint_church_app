@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatelessWidget {
   final TextEditingController emailController;
@@ -51,11 +52,19 @@ class LoginForm extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: onSubmit,
+              child: const Text('Login', style: TextStyle(fontSize: 20)),
+            ),
+          ),
+          const SizedBox(height: 2),
+          SizedBox(
+            width: double.infinity,
+            child: TextButton(
+              onPressed: () {
+                context.go("/signup");
+              },
               child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                'Don\'t have an account? Sign Up!',
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ),

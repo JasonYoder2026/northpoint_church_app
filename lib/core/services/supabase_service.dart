@@ -58,9 +58,17 @@ class SupabaseService extends SupabaseProvider {
       data: {'Display name': name},
     );
 
-    final user = response.user;
+    final user = client.auth.currentUser;
 
-    if (user != null) {
+    final UserResponse = await client.from("Users").insert({
+      'id': user?.id,
+      'Name': name,
+      'Email': email,
+    });
+
+    final user1 = response.user;
+
+    if (user1 != null && UserResponse != null) {
       return AuthenticationResponses.success;
     }
     return AuthenticationResponses.failure;
