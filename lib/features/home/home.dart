@@ -1,18 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
+import 'widgets/grid_button.dart';
+import 'package:go_router/go_router.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<GridButtonData> _gridButtons = [
+    GridButtonData(icon: Icons.payment, text: 'Tithe', route: '/tithe'),
+    GridButtonData(
+      icon: Icons.video_library,
+      text: 'Watch',
+      route: '/livestream',
+    ),
+    GridButtonData(icon: Icons.event, text: 'Events', route: '/events'),
+    GridButtonData(
+      icon: Icons.message_rounded,
+      text: 'Contact',
+      route: '/Contact',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Center(
-        child: Text(
-          'Welcome to Northpoint Church',
-          style: TextStyle(fontSize: 24),
-        ),
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          SizedBox(height: 32),
+          Image.asset('assets/images/Logo.png', width: 180, height: 180),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'We\'re so glad you\'re here!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+          ),
+          // GridView inside Expanded to fill remaining space
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 45,
+                crossAxisSpacing: 45,
+                children: _gridButtons
+                    .map((btn) => GridButton(btnData: btn))
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
       ),
+      bottomNavigationBar: NavBar(currentIndex: 0),
     );
   }
 }
