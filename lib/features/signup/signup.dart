@@ -54,47 +54,67 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset('assets/images/Logo.png', height: 125),
-              const SizedBox(height: 32),
-              Text(
-                'Welcome!',
-                style: TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              SignUpForm(
-                nameController: nameController,
-                emailController: emailController,
-                passwordController: passwordController,
-                confirmPasswordController: confirmPasswordController,
-                onSubmit: _submit,
-              ),
-              if (status == SignupStatus.loading)
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: CircularProgressIndicator(),
-                ),
-              if (status == SignupStatus.error)
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    'Invalid username or password',
+      body: Stack(
+        children: [
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(
+                bottom: 80,
+              ), // leave space for button
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 120),
+                  Text(
+                    'Welcome!',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                      fontSize: 20,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
-                ),
-            ],
+                  const SizedBox(height: 16),
+                  SignUpForm(
+                    nameController: nameController,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    confirmPasswordController: confirmPasswordController,
+                    onSubmit: _submit,
+                  ),
+                  if (status == SignupStatus.loading)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  if (status == SignupStatus.error)
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        'Invalid username or password',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: 150),
+                ],
+              ),
+            ),
           ),
-        ),
+
+          // Back button is now visible on top
+          Positioned(
+            bottom: 0,
+            left: 20,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Theme.of(context).primaryColor,
+              iconSize: 32,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+        ],
       ),
     );
   }
