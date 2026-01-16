@@ -9,7 +9,6 @@
 		<!-- If you also need to save images to the library, add this: -->
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>Your app needs to save images to your photo library.</string>
-
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

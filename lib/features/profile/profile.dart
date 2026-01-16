@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:get_it/get_it.dart';
+import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final supabaseService = GetIt.instance<SupabaseProvider>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,7 @@ class ProfilePage extends StatelessWidget {
               icon: Icons.logout,
               title: 'Log Out',
               onTap: () {
-                // Implement logout logic
+                supabaseService.signOut();
                 context.go('/login');
               },
             ),

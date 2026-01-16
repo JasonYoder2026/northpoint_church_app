@@ -36,7 +36,7 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: '/profile',
       name: 'profile',
-      builder: (context, state) => const ProfilePage(),
+      builder: (context, state) => ProfilePage(),
     ),
   ],
 );

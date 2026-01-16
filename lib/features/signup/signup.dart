@@ -39,21 +39,20 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final status = ref.watch(signupControllerProvider);
+    final signupState = ref.watch(signupControllerProvider);
 
-    ref.listen<SignupStatus>(signupControllerProvider, (prev, next) {
-      if (next == SignupStatus.success) {
+    ref.listen<SignupState>(signupControllerProvider, (prev, next) {
+      if (next.status == SignupStatus.success) {
         context.go('/home'); // navigate on successful signup
-      } else if (next == SignupStatus.error) {
-        final error = ref.read(signupControllerProvider.notifier).errorMessage;
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(error ?? 'Signup failed')));
+      } else if (next.status == SignupStatus.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.errorMessage ?? 'Signup failed')),
+        );
       }
     });
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: AppColors.darkBackground,
       body: Stack(
         children: [
           SafeArea(
@@ -70,7 +69,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -81,12 +80,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     confirmPasswordController: confirmPasswordController,
                     onSubmit: _submit,
                   ),
-                  if (status == SignupStatus.loading)
+                  if (signupState.status == SignupStatus.loading)
                     const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: CircularProgressIndicator(),
                     ),
-                  if (status == SignupStatus.error)
+                  if (signupState.status == SignupStatus.error)
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(

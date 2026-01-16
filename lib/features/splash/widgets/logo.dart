@@ -9,7 +9,7 @@ class LogoWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset('assets/images/Logo.png', width: 120, height: 120),
+        Image.asset('assets/images/logo.png', width: 120, height: 120),
         SizedBox(height: 16),
         Text(
           'NorthPoint Muncie',
