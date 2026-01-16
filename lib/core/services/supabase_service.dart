@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SupabaseService extends SupabaseProvider {
   final SupabaseClient client;
@@ -72,5 +73,33 @@ class SupabaseService extends SupabaseProvider {
       return AuthenticationResponses.success;
     }
     return AuthenticationResponses.failure;
+  }
+
+  @override
+  Future<String> uploadAvatar(XFile image) async {
+    final userId = client.auth.currentUser!.id;
+    final bytes = await image.readAsBytes();
+
+    final path = '$userId/avatar.jpg';
+
+    await client.storage
+        .from('avatars')
+        .uploadBinary(
+          path,
+          bytes,
+          fileOptions: const FileOptions(
+            upsert: true,
+            contentType: 'image/jpeg',
+          ),
+        );
+
+    return client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  @override
+  Future<void> saveAvatarUrl(String url) async {
+    final userId = client.auth.currentUser!.id;
+
+    await client.from('Users').update({'Avatar_URL': url}).eq('id', userId);
   }
 }

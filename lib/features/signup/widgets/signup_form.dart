@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
+import 'package:northpoint_church_app/core/services/image_picker.dart';
+import 'package:get_it/get_it.dart';
 
 class SignUpForm extends StatelessWidget {
   final TextEditingController nameController;
@@ -6,8 +9,9 @@ class SignUpForm extends StatelessWidget {
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
   final void Function() onSubmit;
+  final supabaseService = GetIt.instance<SupabaseProvider>();
 
-  const SignUpForm({
+  SignUpForm({
     super.key,
     required this.nameController,
     required this.emailController,
@@ -23,6 +27,18 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          ElevatedButton(
+            onPressed: () async {
+              final image = await pickAvatarImage();
+              if (image == null) {
+                return;
+              }
+
+              final url = await supabaseService.uploadAvatar(image);
+              await supabaseService.saveAvatarUrl(url);
+            },
+            child: Text("Pick Photo"),
+          ),
           Material(
             elevation: 4,
             shadowColor: Colors.black.withValues(alpha: 0.5),

@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class SupabaseProvider {
   Future<SupabaseClient?> getCurrentSession();
@@ -15,4 +16,6 @@ abstract class SupabaseProvider {
     required String email,
     required String password,
   });
+  Future<String> uploadAvatar(XFile image);
+  Future<void> saveAvatarUrl(String url);
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
 import 'widgets/grid_button.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SizedBox(height: 32),
-          Image.asset('assets/images/Logo.png', width: 180, height: 180),
+          Image.asset('assets/images/logo.png', width: 180, height: 180),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(

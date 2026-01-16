@@ -3,6 +3,7 @@ import 'package:northpoint_church_app/features/splash/splash_page.dart';
 import 'package:northpoint_church_app/features/home/home.dart';
 import 'package:northpoint_church_app/features/login/login.dart';
 import 'package:northpoint_church_app/features/signup/signup.dart';
+import 'package:northpoint_church_app/features/profile/profile.dart';
 import 'transitions.dart';
 
 GoRouter router() => GoRouter(
@@ -21,7 +22,9 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: '/login',
       name: 'login',
-      builder: (context, state) => const LoginPage(),
+      pageBuilder: (context, state) {
+        return slideFromRight(child: const LoginPage());
+      },
     ),
     GoRoute(
       path: "/signup",
@@ -29,6 +32,11 @@ GoRouter router() => GoRouter(
       pageBuilder: (context, state) {
         return slideFromRight(child: const SignupPage());
       },
+    ),
+    GoRoute(
+      path: '/profile',
+      name: 'profile',
+      builder: (context, state) => const ProfilePage(),
     ),
   ],
 );
