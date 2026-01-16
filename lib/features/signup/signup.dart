@@ -53,9 +53,19 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
-      body: Stack(
-        children: [
-          SafeArea(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: ScrollbarTheme(
+        data: ScrollbarThemeData(
+          thumbColor: WidgetStateProperty.all(Colors.teal),
+        ),
+        child: Scrollbar(
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(
                 bottom: 80,
@@ -89,7 +99,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        'Invalid username or password',
+                        'Signup Error: ${signupState.errorMessage}',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.error,
                           fontSize: 20,
@@ -101,19 +111,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               ),
             ),
           ),
-
-          // Back button is now visible on top
-          Positioned(
-            bottom: 0,
-            left: 20,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: Theme.of(context).primaryColor,
-              iconSize: 32,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-        ],
       ),
     );
   }

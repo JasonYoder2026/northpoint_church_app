@@ -71,12 +71,14 @@ class SignupController extends Notifier<SignupState> {
         password: password,
       );
 
+      print("Signup response: " + response.toString());
+
       if (response == AuthenticationResponses.success) {
         state = state.copyWith(status: SignupStatus.success);
       } else {
         state = state.copyWith(
           status: SignupStatus.error,
-          errorMessage: 'Invalid email or password',
+          errorMessage: 'Failed creating account. Internal server error.',
         );
       }
 
