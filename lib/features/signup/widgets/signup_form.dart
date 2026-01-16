@@ -7,7 +7,6 @@ import "dart:io";
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/password_validator.dart';
 
-
 class SignUpForm extends ConsumerWidget {
   final TextEditingController nameController;
   final TextEditingController emailController;
@@ -181,7 +180,7 @@ class SignUpForm extends ConsumerWidget {
                   if (value == null || value.isEmpty) {
                     return 'Please confirm your password';
                   }
-                  if (value != confirmPasswordController.text) {
+                  if (value != passwordController.text) {
                     return 'Passwords do not match';
                   }
                   return null;

@@ -4,6 +4,7 @@ import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/image_picker.dart';
 import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 enum SignupStatus { idle, loading, success, error }
 
@@ -13,7 +14,7 @@ class SignupState {
   final String? errorMessage;
   final String? avatarUrl;
   final bool isUploadingAvatar;
-  final File? pickedImage;
+  final XFile? pickedImage;
   final bool isLoading;
   final String? authError;
 
@@ -32,7 +33,7 @@ class SignupState {
     String? errorMessage,
     String? avatarUrl,
     bool? isUploadingAvatar,
-    File? pickedImage,
+    XFile? pickedImage,
     bool? isLoading,
     String? authError,
   }) {
@@ -92,7 +93,8 @@ class SignupController extends Notifier<SignupState> {
       String? avatarUrl;
       if (state.pickedImage != null) {
         state = state.copyWith(isUploadingAvatar: true);
-        avatarUrl = await supabase.uploadAvatar(user.id, state.pickedImage!);
+        File image = File(state.pickedImage!.path);
+        avatarUrl = await supabase.uploadAvatar(user.id, image);
         state = state.copyWith(isUploadingAvatar: false, avatarUrl: avatarUrl);
       }
       state = state.copyWith(status: SignupStatus.success);
