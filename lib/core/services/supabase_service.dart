@@ -1,7 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:northpoint_church_app/core/config/signup_result.dart';
+import 'package:northpoint_church_app/core/services/password_validator.dart';
+import 'dart:io';
 
 class SupabaseService extends SupabaseProvider {
   final SupabaseClient client;
@@ -48,50 +50,50 @@ class SupabaseService extends SupabaseProvider {
   }
 
   @override
-  Future<AuthenticationResponses> signup({
+  Future<SignupResult> signup({
     required String name,
     required String email,
     required String password,
   }) async {
-    final AuthResponse response = await client.auth.signUp(
+    final passwordCheck = validatePassword(password);
+    if (passwordCheck != AuthenticationResponses.success) {
+      return SignupResult(status: passwordCheck);
+    }
+
+    final response = await client.auth.signUp(
       email: email,
       password: password,
       data: {'Display name': name},
     );
 
-    final user = client.auth.currentUser;
+    if (response.user == null) {
+      return SignupResult(status: AuthenticationResponses.failure);
+    }
 
-    final UserResponse = await client.from("Users").insert({
-      'id': user?.id,
+    final user = response.user!;
+
+    if (response.session == null) {
+      return SignupResult(
+        status: AuthenticationResponses.emailNotVerified,
+        user: user,
+      );
+    }
+
+    await client.from("Users").insert({
+      'id': user.id,
       'Name': name,
       'Email': email,
     });
-
-    final user1 = response.user;
-
-    if (user1 != null && UserResponse != null) {
-      return AuthenticationResponses.success;
-    }
-    return AuthenticationResponses.failure;
+    return SignupResult(status: AuthenticationResponses.success, user: user);
   }
 
   @override
-  Future<String> uploadAvatar(XFile image) async {
-    final userId = client.auth.currentUser!.id;
-    final bytes = await image.readAsBytes();
-
+  Future<String> uploadAvatar(String userId, File image) async {
     final path = '$userId/avatar.jpg';
 
     await client.storage
         .from('avatars')
-        .uploadBinary(
-          path,
-          bytes,
-          fileOptions: const FileOptions(
-            upsert: true,
-            contentType: 'image/jpeg',
-          ),
-        );
+        .upload(path, image, fileOptions: const FileOptions(upsert: true));
 
     return client.storage.from('avatars').getPublicUrl(path);
   }

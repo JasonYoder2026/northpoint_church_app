@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/image_picker.dart';
+import 'dart:io';
 
 enum SignupStatus { idle, loading, success, error }
 
@@ -13,7 +13,9 @@ class SignupState {
   final String? errorMessage;
   final String? avatarUrl;
   final bool isUploadingAvatar;
-  final XFile? pickedImage;
+  final File? pickedImage;
+  final bool isLoading;
+  final String? authError;
 
   const SignupState({
     this.status = SignupStatus.idle,
@@ -21,6 +23,8 @@ class SignupState {
     this.avatarUrl,
     this.isUploadingAvatar = false,
     this.pickedImage,
+    this.isLoading = false,
+    this.authError,
   });
 
   SignupState copyWith({
@@ -28,7 +32,9 @@ class SignupState {
     String? errorMessage,
     String? avatarUrl,
     bool? isUploadingAvatar,
-    XFile? pickedImage,
+    File? pickedImage,
+    bool? isLoading,
+    String? authError,
   }) {
     return SignupState(
       status: status ?? this.status,
@@ -36,6 +42,8 @@ class SignupState {
       avatarUrl: avatarUrl ?? this.avatarUrl,
       isUploadingAvatar: isUploadingAvatar ?? this.isUploadingAvatar,
       pickedImage: pickedImage ?? this.pickedImage,
+      isLoading: isLoading ?? this.isLoading,
+      authError: authError ?? this.authError,
     );
   }
 }
@@ -71,22 +79,20 @@ class SignupController extends Notifier<SignupState> {
         password: password,
       );
 
-      print("Signup response: " + response.toString());
-
-      if (response == AuthenticationResponses.success) {
-        state = state.copyWith(status: SignupStatus.success);
-      } else {
+      if (response.status != AuthenticationResponses.success) {
         state = state.copyWith(
           status: SignupStatus.error,
-          errorMessage: 'Failed creating account. Internal server error.',
+          errorMessage: _mapSignupEnumToMessage(response.status),
         );
+        return;
       }
+      final user = response.user!;
 
       // 2) upload image if picked
       String? avatarUrl;
       if (state.pickedImage != null) {
         state = state.copyWith(isUploadingAvatar: true);
-        avatarUrl = await supabase.uploadAvatar(state.pickedImage!);
+        avatarUrl = await supabase.uploadAvatar(user.id, state.pickedImage!);
         state = state.copyWith(isUploadingAvatar: false, avatarUrl: avatarUrl);
       }
       state = state.copyWith(status: SignupStatus.success);
@@ -95,6 +101,42 @@ class SignupController extends Notifier<SignupState> {
         status: SignupStatus.error,
         errorMessage: e.toString(),
       );
+    }
+  }
+
+  String _mapSignupEnumToMessage(AuthenticationResponses status) {
+    switch (status) {
+      case AuthenticationResponses.noSpecialCharacter:
+        return 'Password must contain a special character';
+      case AuthenticationResponses.noDigit:
+        return 'Password must contain a number';
+      case AuthenticationResponses.noUppercase:
+        return 'Password must contain an uppercase letter';
+      case AuthenticationResponses.lessThanMinLength:
+        return 'Password is too short';
+      case AuthenticationResponses.emailNotVerified:
+        return 'Please verify your email before signing in';
+      case AuthenticationResponses.failure:
+        return 'Signup failed. Please try again.';
+      default:
+        return 'An unexpected error occurred';
+    }
+  }
+
+  String mapPasswordError(AuthenticationResponses status) {
+    switch (status) {
+      case AuthenticationResponses.lessThanMinLength:
+        return 'Password must be at least 8 characters';
+      case AuthenticationResponses.noUppercase:
+        return 'Password must contain an uppercase letter';
+      case AuthenticationResponses.noDigit:
+        return 'Password must contain a number';
+      case AuthenticationResponses.noSpecialCharacter:
+        return 'Password must contain a special character';
+      case AuthenticationResponses.invalidSpecialCharacter:
+        return 'Password contains invalid characters';
+      default:
+        return 'Invalid password';
     }
   }
 }
