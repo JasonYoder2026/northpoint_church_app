@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:northpoint_church_app/app.dart';
+import 'package:northpoint_church_app/core/error/global_error_handler.dart';
 import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 import 'core/services/supabase_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await setupDependencies();
+  FlutterError.onError = (details) {
+    GlobalErrorHandler.report(
+      error: details.exception,
+      stackTrace: details.stack,
+      context: "FlutterError",
+    );
+  };
   runApp(const ProviderScope(child: App()));
 }
 
