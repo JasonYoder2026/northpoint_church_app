@@ -6,6 +6,7 @@ import 'package:northpoint_church_app/features/signup/signup.dart';
 import 'package:northpoint_church_app/features/profile/profile.dart';
 import 'transitions.dart';
 import 'package:northpoint_church_app/features/shell/main_scaffold.dart';
+import 'package:northpoint_church_app/features/help/help.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -28,6 +29,11 @@ final router = GoRouter(
       pageBuilder: (context, state) {
         return slideFromRight(child: const SignupPage());
       },
+    ),
+    GoRoute(
+      path: '/help',
+      name: 'help',
+      builder: (context, state) => const HelpPage(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

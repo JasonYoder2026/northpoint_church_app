@@ -137,4 +137,12 @@ class SupabaseService extends SupabaseProvider {
       throw Exception("User not found: $e");
     }
   }
+
+  @override
+  Future<void> submitProblemReport(String userId, String message) async {
+    await client.from('problem_reports').insert({
+      'user_id': userId,
+      'message': message,
+    });
+  }
 }

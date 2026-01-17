@@ -11,14 +11,10 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
-  int _lastIndex = 0;
-
   void _onTap(int index) {
     if (index == widget.navigationShell.currentIndex) return;
 
-    setState(() {
-      _lastIndex = widget.navigationShell.currentIndex;
-    });
+    setState(() {});
 
     widget.navigationShell.goBranch(index, initialLocation: true);
   }
