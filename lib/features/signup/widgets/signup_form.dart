@@ -44,7 +44,7 @@ class SignUpForm extends ConsumerWidget {
                   radius: 48,
                   backgroundColor: Theme.of(
                     context,
-                  ).colorScheme.primary.withOpacity(0.1),
+                  ).colorScheme.primary.withValues(alpha: 0.27),
                   foregroundImage: signupState.pickedImage != null
                       ? FileImage(File(signupState.pickedImage!.path))
                       : (signupState.avatarUrl != null
@@ -62,28 +62,18 @@ class SignUpForm extends ConsumerWidget {
                       : null,
                 ),
                 Positioned(
-                  bottom: -10,
-                  right: -10,
+                  bottom: -8,
+                  right: -8,
                   child: IconButton(
                     onPressed: () {
                       signupController.pickAvatar();
                     },
-                    icon: const Icon(Icons.add_a_photo),
-                  ),
-                ),
-                // Debug overlay - remove this after testing
-                if (signupState.avatarUrl != null)
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      color: Colors.black54,
-                      child: Text(
-                        'Image loaded',
-                        style: TextStyle(color: Colors.white, fontSize: 8),
-                      ),
+                    icon: Icon(
+                      Icons.add_a_photo_rounded,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
+                ),
               ],
             ),
             const SizedBox(height: 10),

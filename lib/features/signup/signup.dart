@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/colors.dart';
 import 'signup_controller.dart';
 import 'widgets/signup_form.dart';
 
@@ -43,7 +42,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     ref.listen<SignupState>(signupControllerProvider, (prev, next) {
       if (next.status == SignupStatus.success) {
-        context.go('/home'); // navigate on successful signup
+        context.go('/home');
       } else if (next.status == SignupStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(next.errorMessage ?? 'Signup failed')),
@@ -52,65 +51,63 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     });
 
     return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: ScrollbarTheme(
-        data: ScrollbarThemeData(
-          thumbColor: WidgetStateProperty.all(Colors.teal),
-        ),
-        child: Scrollbar(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(
-                bottom: 80,
-              ), // leave space for button
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 120),
-                  Text(
-                    'Welcome!',
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SignUpForm(
-                    nameController: nameController,
-                    emailController: emailController,
-                    passwordController: passwordController,
-                    confirmPasswordController: confirmPasswordController,
-                    onSubmit: _submit,
-                  ),
-                  if (signupState.status == SignupStatus.loading)
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  if (signupState.status == SignupStatus.error)
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        'Signup Error: ${signupState.errorMessage}',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  SizedBox(height: 150),
-                ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 40),
+              Text(
+                'Welcome!',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
-            ),
+              const SizedBox(height: 32),
+              SignUpForm(
+                nameController: nameController,
+                emailController: emailController,
+                passwordController: passwordController,
+                confirmPasswordController: confirmPasswordController,
+                onSubmit: _submit,
+              ),
+              const SizedBox(height: 16),
+              if (signupState.status == SignupStatus.loading)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator(),
+                ),
+              if (signupState.status == SignupStatus.error)
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    'Signup Error: ${signupState.errorMessage}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 40),
+            ],
           ),
+        ),
       ),
     );
   }
