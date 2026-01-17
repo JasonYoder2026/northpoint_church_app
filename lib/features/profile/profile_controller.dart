@@ -48,10 +48,14 @@ class ProfileController extends Notifier<ProfileState> {
 
       final response = await supabase.getUserProfile(user.id);
 
+      final avatarPath = response['Avatar_URL'] as String?;
+
+      String? avatarUrl = await supabase.getAvatarUrl(avatarPath!);
+
       state = state.copyWith(
         name: response['Name'] as String?,
         email: response['Email'] as String?,
-        //avatarUrl: response['AvatarUrl'] as String?, // if you store avatar in table
+        avatarUrl: avatarUrl, 
         isLoading: false,
       );
     } catch (e) {

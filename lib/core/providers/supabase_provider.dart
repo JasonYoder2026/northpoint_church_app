@@ -21,4 +21,5 @@ abstract class SupabaseProvider {
   Future<String> uploadAvatar(String userId, File image);
   Future<void> saveAvatarUrl(String url);
   Future<Map<String, dynamic>> getUserProfile(String userId);
+  Future<String?> getAvatarUrl(String path);
 }

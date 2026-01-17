@@ -88,10 +88,13 @@ class SupabaseService extends SupabaseProvider {
       );
     }
 
+    final userId = user.id;
+
     await client.from("Users").insert({
-      'id': user.id,
+      'id': userId,
       'Name': name,
       'Email': email,
+      "Avatar_URL": "$userId/avatar.jpg",
     });
     return SignupResult(status: AuthenticationResponses.success, user: user);
   }
@@ -105,6 +108,12 @@ class SupabaseService extends SupabaseProvider {
         .upload(path, image, fileOptions: const FileOptions(upsert: true));
 
     return client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  @override
+  Future<String?> getAvatarUrl(String path) async {
+    final response = client.storage.from('avatars').getPublicUrl(path);
+    return response;
   }
 
   @override
