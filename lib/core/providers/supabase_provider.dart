@@ -6,6 +6,7 @@ import 'dart:io';
 abstract class SupabaseProvider {
   Future<SupabaseClient?> getCurrentSession();
   Future<String?> getCurrentToken();
+  Future<User> currentUser();
   Future<void> signOut() async {}
   Future<AuthenticationResponses> signIn({
     required String email,
@@ -19,4 +20,5 @@ abstract class SupabaseProvider {
   });
   Future<String> uploadAvatar(String userId, File image);
   Future<void> saveAvatarUrl(String url);
+  Future<Map<String, dynamic>> getUserProfile(String userId);
 }

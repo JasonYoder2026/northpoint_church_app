@@ -22,6 +22,15 @@ class SupabaseService extends SupabaseProvider {
   }
 
   @override
+  Future<User> currentUser() async {
+    final user = client.auth.currentUser;
+    if (user == null) {
+      throw Exception("No user logged in");
+    }
+    return user;
+  }
+
+  @override
   Future<AuthenticationResponses> signIn({
     required String email,
     required String password,
@@ -103,5 +112,20 @@ class SupabaseService extends SupabaseProvider {
     final userId = client.auth.currentUser!.id;
 
     await client.from('Users').update({'Avatar_URL': url}).eq('id', userId);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getUserProfile(String userId) async {
+    try {
+      final response = await client
+          .from("Users")
+          .select()
+          .eq("id", userId)
+          .single();
+
+      return response;
+    } catch (e) {
+      throw Exception("User not found: $e");
+    }
   }
 }
