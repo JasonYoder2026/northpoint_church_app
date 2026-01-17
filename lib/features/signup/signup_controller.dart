@@ -5,6 +5,8 @@ import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/image_picker.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:northpoint_church_app/core/error/global_error_handler.dart';
 
 enum SignupStatus { idle, loading, success, error }
 
@@ -59,10 +61,15 @@ class SignupController extends Notifier<SignupState> {
       if (image == null) return;
 
       state = state.copyWith(pickedImage: image);
-    } catch (e) {
+    } catch (e, stack) {
+      GlobalErrorHandler.report(
+        error: e,
+        stackTrace: stack,
+        context: 'SignupController.pickAvatar',
+      );
+
       state = state.copyWith(
-        isUploadingAvatar: false,
-        errorMessage: e.toString(),
+        errorMessage: 'Could not pick image. Please try again.',
       );
     }
   }
@@ -73,7 +80,7 @@ class SignupController extends Notifier<SignupState> {
     final supabase = GetIt.instance<SupabaseProvider>();
 
     try {
-      //1) create user account
+      // 1️⃣ Create account
       final response = await supabase.signup(
         name: name,
         email: email,
@@ -87,22 +94,62 @@ class SignupController extends Notifier<SignupState> {
         );
         return;
       }
+
       final user = response.user!;
 
-      // 2) upload image if picked
-      String? avatarUrl;
+      // 2️⃣ Upload avatar (NON-FATAL)
       if (state.pickedImage != null) {
-        state = state.copyWith(isUploadingAvatar: true);
-        File image = File(state.pickedImage!.path);
-        avatarUrl = await supabase.uploadAvatar(user.id, image);
-        state = state.copyWith(isUploadingAvatar: false, avatarUrl: avatarUrl);
+        try {
+          state = state.copyWith(isUploadingAvatar: true);
+
+          final file = File(state.pickedImage!.path);
+          final avatarUrl = await supabase.uploadAvatar(user.id, file);
+
+          state = state.copyWith(
+            avatarUrl: avatarUrl,
+            isUploadingAvatar: false,
+          );
+        } catch (e, stack) {
+          // Avatar upload failure should NOT fail signup
+          GlobalErrorHandler.report(
+            error: e,
+            stackTrace: stack,
+            context: 'SignupController.uploadAvatar',
+          );
+
+          state = state.copyWith(isUploadingAvatar: false);
+        }
       }
+
+      // 3️⃣ Success
       state = state.copyWith(status: SignupStatus.success);
-    } catch (e) {
+    } on AuthException catch (e) {
       state = state.copyWith(
         status: SignupStatus.error,
-        errorMessage: e.toString(),
+        errorMessage: _mapAuthError(e),
       );
+    } catch (e, stack) {
+      GlobalErrorHandler.report(
+        error: e,
+        stackTrace: stack,
+        context: 'SignupController.signup',
+      );
+
+      state = state.copyWith(
+        status: SignupStatus.error,
+        errorMessage: 'Something went wrong. Please try again.',
+      );
+    }
+  }
+
+  String _mapAuthError(AuthException e) {
+    switch (e.message) {
+      case 'User already registered':
+        return 'An account already exists for this email.';
+      case 'Password should be at least 6 characters':
+        return 'Password is too short.';
+      default:
+        return 'Signup failed. Please try again.';
     }
   }
 
