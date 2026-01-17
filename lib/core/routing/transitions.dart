@@ -4,13 +4,14 @@ import 'package:go_router/go_router.dart';
 CustomTransitionPage slideFromRight({required Widget child}) {
   return CustomTransitionPage(
     child: child,
+    transitionDuration: const Duration(milliseconds: 500),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final tween = Tween(
-        begin: const Offset(1, 0),
-        end: Offset.zero,
-      ).chain(CurveTween(curve: Curves.easeOutCubic));
-
-      return SlideTransition(position: animation.drive(tween), child: child);
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+      return SlideTransition(position: offsetAnimation, child: child);
     },
   );
 }
@@ -18,13 +19,14 @@ CustomTransitionPage slideFromRight({required Widget child}) {
 CustomTransitionPage slideFromLeft({required Widget child}) {
   return CustomTransitionPage(
     child: child,
+    transitionDuration: const Duration(milliseconds: 500),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final tween = Tween(
-        begin: const Offset(-1, 0),
-        end: Offset.zero,
-      ).chain(CurveTween(curve: Curves.easeOutCubic));
-
-      return SlideTransition(position: animation.drive(tween), child: child);
+      const begin = Offset(-1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+      return SlideTransition(position: offsetAnimation, child: child);
     },
   );
 }
