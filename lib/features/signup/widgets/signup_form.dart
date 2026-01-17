@@ -197,7 +197,7 @@ class SignUpForm extends ConsumerWidget {
                       decoration: TextDecoration.underline,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => context.go('/terms'),
+                      ..onTap = () => context.push('/terms'),
                   ),
                   TextSpan(
                     text: ' and ',
@@ -212,7 +212,7 @@ class SignUpForm extends ConsumerWidget {
                       decoration: TextDecoration.underline,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => context.go('/privacy'),
+                      ..onTap = () => context.push('/privacy'),
                   ),
                   const TextSpan(text: '.'),
                 ],

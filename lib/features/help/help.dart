@@ -77,10 +77,17 @@ class HelpPage extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push("/terms");
+              },
               child: const Text('Terms & Conditions'),
             ),
-            TextButton(onPressed: () {}, child: const Text('Privacy Policy')),
+            TextButton(
+              onPressed: () {
+                context.push("/privacy");
+              },
+              child: const Text('Privacy Policy'),
+            ),
             TextButton(onPressed: () {}, child: const Text('Church Website')),
           ],
         ),
