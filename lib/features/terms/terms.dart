@@ -21,18 +21,49 @@ class TermsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Text('''
-Terms & Conditions
+          child: Column(
+            children: [
+              Text(
+                "Terms & Conditions",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).textTheme.displayMedium?.color,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                '''
+Welcome to the Northpoint Church App. By using this app, you agree to the following terms:
 
-By using this app, you agree to the following terms:
+1. Use of the App
+   - You may use the app for personal, non-commercial purposes related to church activities.
+   - You agree not to misuse the app or interfere with its functionality.
 
-1. You are responsible for your account and actions.
-2. Do not submit abusive, harmful, or illegal content.
-3. We may suspend or terminate your account for misuse.
-4. We are not liable for any data loss or damages.
+2. User Accounts
+   - You are responsible for maintaining the confidentiality of your login information.
+   - You agree to provide accurate information when creating an account.
 
-These terms may be updated from time to time. Continued use of the app constitutes acceptance of the updated terms.
-            ''', style: const TextStyle(fontSize: 14, height: 1.5)),
+3. Content
+   - All content provided in the app is for informational purposes only.
+   - You may not copy, distribute, or modify any content without permission.
+
+4. Liability
+   - The app is provided "as is" and the church is not responsible for any errors, interruptions, or data loss.
+
+5. Updates
+   - We may update these terms at any time. Continued use of the app constitutes acceptance of any changes.
+
+Thank you for using the app responsibly.
+            ''',
+                style: TextStyle(
+                  fontSize: 14,
+                  height: 1.5,
+                  color: Theme.of(context).textTheme.displayMedium?.color,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
