@@ -7,7 +7,7 @@ import 'package:northpoint_church_app/features/profile/profile.dart';
 import 'transitions.dart';
 import 'package:northpoint_church_app/features/shell/main_scaffold.dart';
 
-GoRouter router() => GoRouter(
+final router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(

@@ -14,15 +14,13 @@ class _MainScaffoldState extends State<MainScaffold> {
   int _lastIndex = 0;
 
   void _onTap(int index) {
-    final currentIndex = widget.navigationShell.currentIndex;
-
-    if (index == currentIndex) return;
+    if (index == widget.navigationShell.currentIndex) return;
 
     setState(() {
-      _lastIndex = currentIndex;
+      _lastIndex = widget.navigationShell.currentIndex;
     });
 
-    widget.navigationShell.goBranch(index);
+    widget.navigationShell.goBranch(index, initialLocation: true);
   }
 
   @override
@@ -30,29 +28,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     final currentIndex = widget.navigationShell.currentIndex;
 
     return Scaffold(
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 280),
-        switchInCurve: Curves.easeOut,
-        switchOutCurve: Curves.easeIn,
-        transitionBuilder: (child, animation) {
-          final isForward = currentIndex > _lastIndex;
-          final beginOffset = isForward
-              ? const Offset(1, 0)
-              : const Offset(-1, 0);
-
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: beginOffset,
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-        child: KeyedSubtree(
-          key: ValueKey(currentIndex),
-          child: widget.navigationShell,
-        ),
-      ),
+      body: widget.navigationShell, // don't wrap the shell
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: _onTap,

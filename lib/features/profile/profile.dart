@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:northpoint_church_app/features/profile/widgets/theme_tile.dart';
 import 'profile_controller.dart';
-import '../global_widgets/nav_bar.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/settings_tile.dart';
 
@@ -29,7 +29,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final controller = ref.read(profileControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : state.error != null
@@ -60,6 +60,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     trailing: Switch(value: true, onChanged: (_) {}),
                     onTap: () {},
                   ),
+                  const ThemeTile(),
                   SettingsTile(
                     icon: Icons.help_outline,
                     title: 'Help & Support',
@@ -76,7 +77,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ],
               ),
             ),
-      bottomNavigationBar: NavBar(currentIndex: 1),
     );
   }
 }

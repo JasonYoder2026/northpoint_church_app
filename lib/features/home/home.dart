@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
 import 'widgets/grid_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,7 +60,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: NavBar(currentIndex: 0),
     );
   }
 }
