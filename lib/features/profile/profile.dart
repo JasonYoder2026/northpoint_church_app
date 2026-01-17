@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'profile_controller.dart';
+import '../global_widgets/nav_bar.dart';
+import 'widgets/profile_header.dart';
+import 'widgets/settings_tile.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -35,34 +38,34 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: Column(
                 children: [
                   const SizedBox(height: 32),
-                  _ProfileHeader(
+                  ProfileHeader(
                     name: state.name ?? '',
                     email: state.email ?? '',
                     avatarUrl: state.avatarUrl,
                   ),
                   const SizedBox(height: 32),
-                  _SettingsTile(
+                  SettingsTile(
                     icon: Icons.edit,
                     title: 'Edit Profile',
                     onTap: () => context.go('/edit-profile'),
                   ),
-                  _SettingsTile(
+                  SettingsTile(
                     icon: Icons.lock,
                     title: 'Change Password',
                     onTap: () => context.go('/change-password'),
                   ),
-                  _SettingsTile(
+                  SettingsTile(
                     icon: Icons.notifications,
                     title: 'Notifications',
                     trailing: Switch(value: true, onChanged: (_) {}),
                     onTap: () {},
                   ),
-                  _SettingsTile(
+                  SettingsTile(
                     icon: Icons.help_outline,
                     title: 'Help & Support',
                     onTap: () => context.go('/help'),
                   ),
-                  _SettingsTile(
+                  SettingsTile(
                     icon: Icons.logout,
                     title: 'Log Out',
                     onTap: () async {
@@ -73,64 +76,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-/// Reusable settings tile
-class _SettingsTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Widget? trailing;
-  final VoidCallback? onTap;
-
-  const _SettingsTile({
-    required this.icon,
-    required this.title,
-    this.trailing,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
-      title: Text(title, style: const TextStyle(fontSize: 18)),
-      trailing: trailing,
-      onTap: onTap,
-    );
-  }
-}
-
-class _ProfileHeader extends StatelessWidget {
-  final String name;
-  final String email;
-  final String? avatarUrl;
-
-  const _ProfileHeader({
-    required this.name,
-    required this.email,
-    this.avatarUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundImage: avatarUrl != null
-              ? NetworkImage(avatarUrl!)
-              : const AssetImage('assets/images/logo.png') as ImageProvider,
-        ),
-        const SizedBox(height: 16),
-        Text(
-          name,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(email, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-      ],
+      bottomNavigationBar: NavBar(currentIndex: 1),
     );
   }
 }
