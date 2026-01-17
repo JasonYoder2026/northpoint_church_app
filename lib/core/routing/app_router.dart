@@ -7,10 +7,22 @@ import 'package:northpoint_church_app/features/profile/profile.dart';
 import 'transitions.dart';
 import 'package:northpoint_church_app/features/shell/main_scaffold.dart';
 import 'package:northpoint_church_app/features/help/help.dart';
+import 'package:northpoint_church_app/features/privacy/privacy.dart';
+import 'package:northpoint_church_app/features/terms/terms.dart';
 
 final router = GoRouter(
   initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/privacy',
+      name: 'privacy',
+      builder: (context, state) => const PrivacyPolicyPage(),
+    ),
+    GoRoute(
+      path: '/terms',
+      name: 'terms',
+      builder: (context, state) => const TermsPage(),
+    ),
     GoRoute(
       path: '/',
       name: 'splash',

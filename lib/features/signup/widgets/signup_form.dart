@@ -6,6 +6,8 @@ import 'package:northpoint_church_app/features/signup/signup_controller.dart';
 import "dart:io";
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/password_validator.dart';
+import 'package:flutter/gestures.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpForm extends ConsumerWidget {
   final TextEditingController nameController;
@@ -177,13 +179,53 @@ class SignUpForm extends ConsumerWidget {
                 },
               ),
             ),
-            const SizedBox(height: 24),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(color: Colors.black, fontSize: 12),
+                children: [
+                  TextSpan(
+                    text: 'By clicking Sign Up, you agree to the ',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.displayMedium?.color,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Terms & Conditions',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => context.go('/terms'),
+                  ),
+                  TextSpan(
+                    text: ' and ',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.displayMedium?.color,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Privacy Policy',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => context.go('/privacy'),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    onSubmit(); // only runs if ALL fields are valid
+                  if (_formKey.currentState?.validate() ?? false) {
+                    onSubmit();
                   }
                 },
                 style: ElevatedButton.styleFrom(

@@ -87,6 +87,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 confirmPasswordController: confirmPasswordController,
                 onSubmit: _submit,
               ),
+
               const SizedBox(height: 16),
               if (signupState.status == SignupStatus.loading)
                 const Padding(
@@ -104,7 +105,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     ),
                   ),
                 ),
-              const SizedBox(height: 40),
             ],
           ),
         ),
