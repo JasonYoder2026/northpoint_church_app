@@ -5,6 +5,7 @@ import 'package:northpoint_church_app/features/login/login.dart';
 import 'package:northpoint_church_app/features/signup/signup.dart';
 import 'package:northpoint_church_app/features/profile/profile.dart';
 import 'transitions.dart';
+import 'package:northpoint_church_app/features/shell/main_scaffold.dart';
 
 GoRouter router() => GoRouter(
   initialLocation: '/',
@@ -13,11 +14,6 @@ GoRouter router() => GoRouter(
       path: '/',
       name: 'splash',
       builder: (context, state) => const SplashPage(),
-    ),
-    GoRoute(
-      path: '/home',
-      name: 'home',
-      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: '/login',
@@ -33,10 +29,22 @@ GoRouter router() => GoRouter(
         return slideFromRight(child: const SignupPage());
       },
     ),
-    GoRoute(
-      path: '/profile',
-      name: 'profile',
-      builder: (context, state) => ProfilePage(),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainScaffold(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/home', builder: (_, __) => const HomePage()),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/profile', builder: (_, __) => ProfilePage()),
+          ],
+        ),
+      ],
     ),
   ],
 );
