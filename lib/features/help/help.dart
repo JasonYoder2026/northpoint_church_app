@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/report_problem.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({super.key});
@@ -88,7 +89,20 @@ class HelpPage extends StatelessWidget {
               },
               child: const Text('Privacy Policy'),
             ),
-            TextButton(onPressed: () {}, child: const Text('Church Website')),
+            TextButton(
+              onPressed: () async {
+                final url = Uri.parse(
+                  'https://www.northpointmuncie.com/',
+                ); // church website
+                if (!await launchUrl(
+                  url,
+                  mode: LaunchMode.externalApplication,
+                )) {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: const Text('Find us on the web'),
+            ),
           ],
         ),
       ),
