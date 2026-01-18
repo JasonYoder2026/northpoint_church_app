@@ -47,6 +47,8 @@ dependencies:
   image_picker: ^1.2.1
 
   url_launcher: ^6.3.2
+
+  webview_flutter: ^4.13.1
   
 
   # The following adds the Cupertino Icons font to your application.

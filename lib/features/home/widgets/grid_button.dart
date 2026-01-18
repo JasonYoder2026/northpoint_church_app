@@ -16,7 +16,7 @@ class GridButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).go(btnData.route),
+      onTap: () => context.push(btnData.route),
       child: Container(
         width: 80,
         height: 80,
