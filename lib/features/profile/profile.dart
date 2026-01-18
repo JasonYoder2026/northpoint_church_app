@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
 import 'package:northpoint_church_app/features/profile/widgets/theme_tile.dart';
 import 'profile_controller.dart';
 import 'widgets/profile_header.dart';
@@ -77,6 +78,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ],
               ),
             ),
+      bottomNavigationBar: NavBar(currentIndex: 1),
     );
   }
 }
