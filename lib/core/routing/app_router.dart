@@ -9,6 +9,7 @@ import 'transitions.dart';
 import 'package:northpoint_church_app/features/help/help.dart';
 import 'package:northpoint_church_app/features/privacy/privacy.dart';
 import 'package:northpoint_church_app/features/terms/terms.dart';
+import 'package:northpoint_church_app/features/watch/watch.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -17,6 +18,11 @@ final router = GoRouter(
       path: '/privacy',
       name: 'privacy',
       builder: (context, state) => const PrivacyPolicyPage(),
+    ),
+    GoRoute(
+      path: '/watch',
+      name: 'watch',
+      builder: (context, state) => const LivestreamPage(),
     ),
     GoRoute(
       path: '/terms',

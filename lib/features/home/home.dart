@@ -12,11 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<GridButtonData> _gridButtons = [
     GridButtonData(icon: Icons.payment, text: 'Tithe', route: '/tithe'),
-    GridButtonData(
-      icon: Icons.video_library,
-      text: 'Watch',
-      route: '/livestream',
-    ),
+    GridButtonData(icon: Icons.video_library, text: 'Watch', route: '/watch'),
     GridButtonData(icon: Icons.event, text: 'Events', route: '/events'),
     GridButtonData(
       icon: Icons.message_rounded,

@@ -145,4 +145,13 @@ class SupabaseService extends SupabaseProvider {
       'message': message,
     });
   }
+
+  @override
+  Future<FunctionResponse?> runEdgeFunction(
+    String name,
+    Map<String, dynamic> body,
+  ) async {
+    final response = await client.functions.invoke(name, body: body);
+    return response;
+  }
 }

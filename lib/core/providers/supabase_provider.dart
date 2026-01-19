@@ -12,7 +12,7 @@ abstract class SupabaseProvider {
     required String email,
     required String password,
   });
-  Future<void> restoreSession() async {}
+  Future<void> restoreSession();
   Future<SignupResult> signup({
     required String name,
     required String email,
@@ -23,4 +23,8 @@ abstract class SupabaseProvider {
   Future<Map<String, dynamic>> getUserProfile(String userId);
   Future<String?> getAvatarUrl(String path);
   Future<void> submitProblemReport(String userId, String message);
+  Future<FunctionResponse?> runEdgeFunction(
+    String name,
+    Map<String, dynamic> body,
+  );
 }
