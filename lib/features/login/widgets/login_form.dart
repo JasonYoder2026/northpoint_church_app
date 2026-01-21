@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod/legacy.dart';
 
-class LoginForm extends StatelessWidget {
+final passwordVisibilityProvider = StateProvider.autoDispose<bool>(
+  (ref) => false,
+);
+
+class LoginForm extends ConsumerWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final void Function() onSubmit;
@@ -14,7 +20,9 @@ class LoginForm extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isVisible = ref.watch(passwordVisibilityProvider);
+
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -40,10 +48,19 @@ class LoginForm extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
             child: TextField(
               controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
+              obscureText: !isVisible,
+              decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    isVisible ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    ref.read(passwordVisibilityProvider.notifier).state =
+                        !isVisible;
+                  },
+                ),
               ),
             ),
           ),

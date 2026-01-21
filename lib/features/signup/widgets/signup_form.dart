@@ -8,6 +8,11 @@ import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/services/password_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod/legacy.dart';
+
+final passwordVisibilityProvider = StateProvider.autoDispose<bool>(
+  (ref) => false,
+);
 
 class SignUpForm extends ConsumerWidget {
   final TextEditingController nameController;
@@ -31,6 +36,7 @@ class SignUpForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signupState = ref.watch(signupControllerProvider);
     final signupController = ref.read(signupControllerProvider.notifier);
+    final isVisible = ref.watch(passwordVisibilityProvider);
 
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -136,10 +142,19 @@ class SignUpForm extends ConsumerWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: TextFormField(
                 controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: !isVisible,
+                decoration: InputDecoration(
                   labelText: 'Password',
                   prefixIcon: Icon(Icons.lock_outline),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      isVisible ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      ref.read(passwordVisibilityProvider.notifier).state =
+                          !isVisible;
+                    },
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -163,10 +178,19 @@ class SignUpForm extends ConsumerWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: TextFormField(
                 controller: confirmPasswordController,
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: !isVisible,
+                decoration: InputDecoration(
                   labelText: 'Confirm Password',
                   prefixIcon: Icon(Icons.lock_outline),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      isVisible ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      ref.read(passwordVisibilityProvider.notifier).state =
+                          !isVisible;
+                    },
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
