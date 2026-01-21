@@ -11,9 +11,9 @@ class VideoView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = YoutubePlayerController.fromVideoId(
       videoId: videoId,
-      autoPlay: true,
+      //autoPlay: true,
       params: YoutubePlayerParams(
-        mute: true,
+        //mute: true,
         enableCaption: true,
         showFullscreenButton: true,
       ),
@@ -23,7 +23,18 @@ class VideoView extends StatelessWidget {
       controller: controller,
       aspectRatio: 16 / 9,
       builder: (context, player) {
-        return Column(children: [player]);
+        return Column(
+          children: [
+            player,
+            SizedBox(height: 10),
+            Text(
+              label,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.displayMedium?.color,
+              ),
+            ),
+          ],
+        );
       },
     );
   }

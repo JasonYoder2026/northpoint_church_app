@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'watch_controller.dart';
 import 'widgets/video.dart';
+import 'package:go_router/go_router.dart';
 
 class LivestreamPage extends ConsumerWidget {
   const LivestreamPage({super.key});
@@ -11,13 +12,21 @@ class LivestreamPage extends ConsumerWidget {
     final state = ref.watch(livestreamControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Livestream')),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          onPressed: () => context.pop(),
+        ),
+      ),
       body: switch (state) {
         LivestreamLoading() => const Center(child: CircularProgressIndicator()),
 
         LivestreamLive(:final videoId) => VideoView(
           videoId: videoId,
-          label: '🔴 Live Now',
+          label: '',
         ),
 
         LivestreamOffline(:final videoId) => VideoView(
