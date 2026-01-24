@@ -16,8 +16,8 @@ class _HomePageState extends State<HomePage> {
     GridButtonData(icon: Icons.event, text: 'Events', route: '/events'),
     GridButtonData(
       icon: Icons.message_rounded,
-      text: 'Contact',
-      route: '/Contact',
+      text: 'Prayer',
+      route: '/prayer',
     ),
   ];
 
