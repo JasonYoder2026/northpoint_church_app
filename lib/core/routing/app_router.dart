@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:northpoint_church_app/features/events/event_detail.dart';
+import 'package:northpoint_church_app/features/events/event_registration.dart';
 import 'package:northpoint_church_app/features/events/events.dart';
 import 'package:northpoint_church_app/features/prayer/prayer.dart';
 import 'package:northpoint_church_app/features/splash/splash_page.dart';
@@ -12,6 +14,8 @@ import 'package:northpoint_church_app/features/help/help.dart';
 import 'package:northpoint_church_app/features/privacy/privacy.dart';
 import 'package:northpoint_church_app/features/terms/terms.dart';
 import 'package:northpoint_church_app/features/watch/watch.dart';
+import 'package:northpoint_church_app/features/events/event_model.dart';
+import 'package:flutter/material.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -35,6 +39,30 @@ final router = GoRouter(
       path: '/events',
       name: 'events',
       builder: (context, state) => const EventsPage(),
+    ),
+    GoRoute(
+      path: '/event-details',
+      builder: (context, state) {
+        final event = state.extra as Event?;
+        if (event == null) {
+          return Scaffold(
+            body: Center(child: Text("No event data provided")),
+          );
+        }
+        return EventDetailPage(event: event);
+      },
+    ),
+    GoRoute(
+      path: '/event-registration',
+      builder: (context, state) {
+        final url = state.extra as String?;
+        if (url == null) {
+          return const Scaffold(
+            body: Center(child: Text('No registration URL provided')),
+          );
+        }
+        return EventRegistrationPage(url: url);
+      },
     ),
     GoRoute(
       path: '/',

@@ -53,7 +53,10 @@ class _EventsPageState extends State<EventsPage> {
         itemCount: events.length,
         itemBuilder: (context, index) {
           final event = events[index];
-          return EventCard(event: event, controller: controller);
+          return GestureDetector(
+            onTap: () => context.push("/event-details", extra: event),
+            child: EventCard(event: event, controller: controller,),
+          );
         },
       ),
     );
