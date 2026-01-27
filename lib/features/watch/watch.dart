@@ -16,7 +16,7 @@ class LivestreamPage extends ConsumerWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
           onPressed: () => context.pop(),
         ),
@@ -24,14 +24,20 @@ class LivestreamPage extends ConsumerWidget {
       body: switch (state) {
         LivestreamLoading() => const Center(child: CircularProgressIndicator()),
 
-        LivestreamLive(:final videoId) => VideoView(
-          videoId: videoId,
-          label: '',
+        LivestreamLive(:final videoId) => Padding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          child: VideoView(
+            videoId: videoId,
+            label: '',
+          ),
         ),
 
-        LivestreamOffline(:final videoId) => VideoView(
-          videoId: videoId,
-          label: "We're not live right now — check out our latest service!",
+        LivestreamOffline(:final videoId) => Padding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          child: VideoView(
+            videoId: videoId,
+            label: "We're not live right now — check out our latest service!",
+          ),
         ),
 
         LivestreamError(:final message) => Center(child: Text(message)),

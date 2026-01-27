@@ -1,4 +1,5 @@
 import 'package:northpoint_church_app/core/config/signup_result.dart';
+import 'package:northpoint_church_app/features/events/event_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'dart:io';
@@ -27,4 +28,5 @@ abstract class SupabaseProvider {
     String name,
     Map<String, dynamic> body,
   );
+  Future<List<Event>> fetchEvents();
 }

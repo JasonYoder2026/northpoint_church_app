@@ -13,7 +13,7 @@ class PrivacyPolicyPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
           onPressed: () => context.pop(),
         ),

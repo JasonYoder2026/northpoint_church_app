@@ -59,7 +59,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
           onPressed: () => context.pop(),
         ),

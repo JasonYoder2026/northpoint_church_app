@@ -54,7 +54,7 @@ class _TithePageState extends State<TithePage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
           onPressed: () => context.pop(),
         ),

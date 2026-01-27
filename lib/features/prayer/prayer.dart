@@ -35,7 +35,9 @@ class _PrayerPageState extends State<PrayerPage> {
         ),
       )
       ..loadRequest(
-        Uri.parse('https://app.easytithe.com/app/giving/northpointchurch'),
+        Uri.parse(
+          'https://northpointmuncie.churchcenter.com/people/forms/670813',
+        ),
       );
   }
 
@@ -51,10 +53,7 @@ class _PrayerPageState extends State<PrayerPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.pop(),
         ),
       ),

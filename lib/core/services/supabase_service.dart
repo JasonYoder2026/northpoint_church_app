@@ -4,6 +4,7 @@ import 'package:northpoint_church_app/core/config/auth_enum.dart';
 import 'package:northpoint_church_app/core/config/signup_result.dart';
 import 'package:northpoint_church_app/core/services/password_validator.dart';
 import 'dart:io';
+import 'package:northpoint_church_app/features/events/event_model.dart';
 
 class SupabaseService extends SupabaseProvider {
   final SupabaseClient client;
@@ -153,5 +154,14 @@ class SupabaseService extends SupabaseProvider {
   ) async {
     final response = await client.functions.invoke(name, body: body);
     return response;
+  }
+
+  Future<List<Event>> fetchEvents() async {
+    final response = await client
+        .from('event_feed')
+        .select()
+        .order('start_at', ascending: true);
+
+    return response.map((e) => Event.fromMap(e)).toList();
   }
 }
