@@ -160,7 +160,8 @@ class SupabaseService extends SupabaseProvider {
     final response = await client
         .from('event_feed')
         .select()
-        .order('start_at', ascending: true);
+        .order('starts_at', ascending: true);
+
 
     return response.map((e) => Event.fromMap(e)).toList();
   }

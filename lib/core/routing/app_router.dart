@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:northpoint_church_app/features/events/events.dart';
 import 'package:northpoint_church_app/features/prayer/prayer.dart';
 import 'package:northpoint_church_app/features/splash/splash_page.dart';
 import 'package:northpoint_church_app/features/home/home.dart';
@@ -29,6 +30,11 @@ final router = GoRouter(
       path: '/terms',
       name: 'terms',
       builder: (context, state) => const TermsPage(),
+    ),
+    GoRoute(
+      path: '/events',
+      name: 'events',
+      builder: (context, state) => const EventsPage(),
     ),
     GoRoute(
       path: '/',
