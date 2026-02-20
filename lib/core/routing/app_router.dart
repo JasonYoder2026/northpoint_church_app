@@ -9,6 +9,7 @@ import 'package:northpoint_church_app/features/settings/settings.dart';
 import 'package:northpoint_church_app/features/tithe/tithe.dart';
 import 'package:northpoint_church_app/features/privacy/privacy.dart';
 import 'package:northpoint_church_app/features/terms/terms.dart';
+import 'package:northpoint_church_app/features/volunteer/volunteer.dart';
 import 'package:northpoint_church_app/features/watch/watch.dart';
 import 'package:northpoint_church_app/features/events/event_model.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,11 @@ final router = GoRouter(
       path: '/',
       name: 'splash',
       builder: (context, state) => const SplashPage(),
+    ),
+    GoRoute(
+      path: '/volunteer',
+      name: 'volunteer',
+      builder: (context, state) => const VolunteerPage(),
     ),
     GoRoute(
       path: '/tithe',

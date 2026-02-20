@@ -11,8 +11,9 @@ class GridButtonData {
 
 class GridButton extends StatefulWidget {
   final GridButtonData btnData;
+  final double size;
 
-  const GridButton({super.key, required this.btnData});
+  const GridButton({super.key, required this.btnData, this.size = 110});
 
   @override
   State<GridButton> createState() => _GridButtonState();
@@ -45,8 +46,8 @@ class _GridButtonState extends State<GridButton> {
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeOut,
         child: Container(
-          width: 90,
-          height: 90,
+          width: widget.size,
+          height: widget.size,
           decoration: BoxDecoration(
             gradient: gradient,
             borderRadius: BorderRadius.circular(20),

@@ -12,20 +12,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<GridButtonData> _gridButtons = [
-    GridButtonData(icon: Icons.payment, text: 'Tithe', route: '/tithe'),
-
-    GridButtonData(
-      icon: Icons.message_rounded,
-      text: 'Prayer',
-      route: '/prayer',
-    ),
+    GridButtonData(icon: Icons.event, text: 'Events', route: '/events'),
     GridButtonData(
       icon: Icons.volunteer_activism,
       text: 'Volunteer',
       route: '/volunteer',
     ),
     GridButtonData(icon: Icons.video_library, text: 'Watch', route: '/watch'),
-    GridButtonData(icon: Icons.event, text: 'Events', route: '/events'),
+    GridButtonData(icon: Icons.payment, text: 'Tithe', route: '/tithe'),
+    GridButtonData(
+      icon: Icons.message_rounded,
+      text: 'Prayer',
+      route: '/prayer',
+    ),
   ];
 
   @override
@@ -54,33 +53,28 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  /// Top Row (3 buttons)
+                  /// 🔥 HERO BUTTON
+                  Center(child: GridButton(btnData: _gridButtons[0])),
+
+                  const SizedBox(height: 25),
+
+                  /// Middle Row
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(child: GridButton(btnData: _gridButtons[0])),
-                      const SizedBox(width: 16),
-                      Expanded(child: GridButton(btnData: _gridButtons[1])),
-                      const SizedBox(width: 16),
-                      Expanded(child: GridButton(btnData: _gridButtons[2])),
+                      GridButton(btnData: _gridButtons[1]),
+                      GridButton(btnData: _gridButtons[2]),
                     ],
                   ),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 25),
 
-                  /// Bottom Row (2 centered buttons)
+                  /// Bottom Row
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: GridButton(btnData: _gridButtons[3]),
-                      ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        flex: 1,
-                        child: GridButton(btnData: _gridButtons[4]),
-                      ),
+                      GridButton(btnData: _gridButtons[3]),
+                      GridButton(btnData: _gridButtons[4]),
                     ],
                   ),
                 ],
