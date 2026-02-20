@@ -66,7 +66,7 @@ class _GridButtonState extends State<GridButton> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(widget.btnData.icon, size: 48, color: Colors.white),
+              Icon(widget.btnData.icon, size: 38, color: Colors.white),
               const SizedBox(height: 8),
               Text(
                 widget.btnData.text,
