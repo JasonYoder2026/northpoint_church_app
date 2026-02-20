@@ -5,6 +5,7 @@ class AppTheme {
   static ThemeData get light {
     final colorScheme = ColorScheme(
       primary: AppColors.primary,
+      inversePrimary: AppColors.primaryGradient,
       secondary: AppColors.secondary,
       surface: AppColors.lightSurface,
       error: Colors.red,
