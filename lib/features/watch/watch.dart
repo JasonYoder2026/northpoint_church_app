@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'watch_controller.dart';
 import 'widgets/video.dart';
 import 'package:go_router/go_router.dart';
+import '../global_widgets/app_bar.dart';
 
 class LivestreamPage extends ConsumerWidget {
   const LivestreamPage({super.key});
@@ -12,12 +13,10 @@ class LivestreamPage extends ConsumerWidget {
     final state = ref.watch(livestreamControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: GradientAppBar(
+        toolbarHeight: 40,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.pop(),
         ),
       ),
@@ -26,10 +25,7 @@ class LivestreamPage extends ConsumerWidget {
 
         LivestreamLive(:final videoId) => Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-          child: VideoView(
-            videoId: videoId,
-            label: '',
-          ),
+          child: VideoView(videoId: videoId, label: ''),
         ),
 
         LivestreamOffline(:final videoId) => Padding(

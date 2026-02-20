@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'event_model.dart';
+import '../global_widgets/app_bar.dart';
 import './events_controller.dart';
 import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 
@@ -41,24 +42,26 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => context.pop(),
-          ),
-          title: const Text('Upcoming Events')),
+      appBar: GradientAppBar(
+        toolbarHeight: 40,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.pop(),
+        ),
+        title: 'Upcoming Events',
+      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: events.length,
-        itemBuilder: (context, index) {
-          final event = events[index];
-          return GestureDetector(
-            onTap: () => context.push("/event-details", extra: event),
-            child: EventCard(event: event, controller: controller,),
-          );
-        },
-      ),
+              itemCount: events.length,
+              itemBuilder: (context, index) {
+                final event = events[index];
+                return GestureDetector(
+                  onTap: () => context.push("/event-details", extra: event),
+                  child: EventCard(event: event, controller: controller),
+                );
+              },
+            ),
     );
   }
 }
@@ -91,10 +94,7 @@ class EventCard extends StatelessWidget {
             // Background image
             if (event.imageUrl != null)
               Positioned.fill(
-                child: Image.network(
-                  event.imageUrl!,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.network(event.imageUrl!, fit: BoxFit.cover),
               )
             else
               Container(color: Colors.grey[300]),
@@ -107,7 +107,10 @@ class EventCard extends StatelessWidget {
               height: 80, // bottom half height
               child: Container(
                 color: Colors.white.withOpacity(0.95),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +120,7 @@ class EventCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black
+                        color: Colors.black,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
