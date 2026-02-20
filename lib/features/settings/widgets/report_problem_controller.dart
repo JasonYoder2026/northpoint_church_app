@@ -33,12 +33,11 @@ class ProblemReportController extends Notifier<ProblemReportState> {
     final supabase = GetIt.instance<SupabaseProvider>();
 
     try {
-      final user = await supabase.currentUser();
-
-      await supabase.submitProblemReport(user.id, message);
+      await supabase.submitProblemReport(message);
 
       state = state.copyWith(status: ReportStatus.success);
     } catch (e) {
+      print(e);
       state = state.copyWith(
         status: ReportStatus.error,
         error: 'Failed to submit report. Please try again.',

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
 import 'package:northpoint_church_app/features/settings/widgets/theme_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'widgets/settings_tile.dart';
+//import 'widgets/settings_tile.dart';
 import 'widgets/report_problem.dart';
 import '../global_widgets/app_bar.dart';
 
@@ -67,47 +67,47 @@ class _SectionHeader extends StatelessWidget {
   }
 }
 
-class _FaqSection extends StatelessWidget {
-  const _FaqSection();
+// class _FaqSection extends StatelessWidget {
+//   const _FaqSection();
 
-  static const _faqs = [
-    (
-      question: 'How do I reset my password?',
-      answer: 'Go to Profile > Change Password and follow the instructions.',
-    ),
-    (
-      question: 'How do I update my profile picture?',
-      answer: 'Go to Profile > Edit Profile, then select a new avatar.',
-    ),
-    (
-      question: 'How do I manage notifications?',
-      answer:
-          'Go to Profile > Notifications and toggle what you want to receive.',
-    ),
-  ];
+//   static const _faqs = [
+//     (
+//       question: 'How do I reset my password?',
+//       answer: 'Go to Profile > Change Password and follow the instructions.',
+//     ),
+//     (
+//       question: 'How do I update my profile picture?',
+//       answer: 'Go to Profile > Edit Profile, then select a new avatar.',
+//     ),
+//     (
+//       question: 'How do I manage notifications?',
+//       answer:
+//           'Go to Profile > Notifications and toggle what you want to receive.',
+//     ),
+//   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: _faqs
-          .map(
-            (faq) => ExpansionTile(
-              title: Text(faq.question),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(faq.answer),
-                  ),
-                ),
-              ],
-            ),
-          )
-          .toList(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: _faqs
+//           .map(
+//             (faq) => ExpansionTile(
+//               title: Text(faq.question),
+//               children: [
+//                 Padding(
+//                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+//                   child: Align(
+//                     alignment: Alignment.centerLeft,
+//                     child: Text(faq.answer),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           )
+//           .toList(),
+//     );
+//   }
+// }
 
 class _QuickLinksSection extends StatelessWidget {
   Future<void> _launchChurchSite() async {
