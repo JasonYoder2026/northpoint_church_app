@@ -14,26 +14,49 @@ class SplashPage extends ConsumerStatefulWidget {
 
 class _SplashPageState extends ConsumerState<SplashPage>
     with TickerProviderStateMixin {
-  late AnimationController _spinController;
+  late AnimationController _animationController;
+  late Animation<double> _rotationAnimation;
+  late Animation<double> _verticalAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
-    _spinController = AnimationController(
+    _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(milliseconds: 1500),
     )..repeat();
 
-    ref.listen<SplashState>(splashControllerProvider, (prev, next) {
-      if (next.status == SplashStatus.ready) {
-        context.go('/home');
-      }
-    });
+    _rotationAnimation = Tween<double>(begin: 0, end: 2 * pi).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _verticalAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -40.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -40.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
+        weight: 50,
+      ),
+    ]).animate(_animationController);
+
+    _scaleAnimation = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.9), weight: 50),
+      TweenSequenceItem(tween: Tween(begin: 0.9, end: 1.0), weight: 50),
+    ]).animate(_animationController);
   }
 
   @override
   void dispose() {
-    _spinController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -41,46 +64,61 @@ class _SplashPageState extends ConsumerState<SplashPage>
   Widget build(BuildContext context) {
     final splashState = ref.watch(splashControllerProvider);
 
+    ref.listen<SplashState>(splashControllerProvider, (prev, next) {
+      if (next.status == SplashStatus.ready) {
+        context.go('/home');
+      }
+    });
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /// Animated Logo
             AnimatedBuilder(
-              animation: _spinController,
+              animation: _animationController,
               builder: (context, child) {
-                return Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..rotateY(_spinController.value * 2 * pi),
-                  child: child,
+                return Transform.translate(
+                  offset: Offset(0, _verticalAnimation.value),
+                  child: Transform.rotate(
+                    angle: _rotationAnimation.value,
+                    child: Transform.scale(
+                      scale: _scaleAnimation.value,
+                      child: child,
+                    ),
+                  ),
                 );
               },
               child: Image.asset('assets/images/logo.png', width: 120),
             ),
 
+            const SizedBox(height: 24),
+
+            const Text(
+              "NorthPoint Muncie",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+
             const SizedBox(height: 40),
 
-            /// Smooth Animated Progress Bar
             SizedBox(
               width: 240,
               child: TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0, end: splashState.progress),
                 duration: const Duration(milliseconds: 400),
                 builder: (context, value, _) {
-                  return LinearProgressIndicator(
-                    value: value,
-                    minHeight: 6,
-                    color: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                  );
+                  return LinearProgressIndicator(value: value, minHeight: 6);
                 },
               ),
             ),
 
             const SizedBox(height: 16),
+
+            Text(
+              splashState.message ?? "",
+              style: const TextStyle(fontSize: 14),
+            ),
 
             if (splashState.status == SplashStatus.error)
               Padding(

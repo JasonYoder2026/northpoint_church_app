@@ -12,17 +12,18 @@ class NavBar extends StatelessWidget {
 
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: Theme.of(
-                context,
-              ).elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
-              Colors.blue,
+      selectedItemColor:
+          Theme.of(
+            context,
+          ).elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
+          Colors.blue,
       onTap: (index) {
         switch (index) {
           case 0:
             router.go('/home');
             break;
           case 1:
-            router.go('/profile');
+            router.go('/settings');
             break;
         }
       },
