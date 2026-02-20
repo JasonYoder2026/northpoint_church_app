@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 CustomTransitionPage slideFromRight({required Widget child}) {
   return CustomTransitionPage(
     child: child,
-    transitionDuration: const Duration(milliseconds: 500),
+    transitionDuration: const Duration(milliseconds: 300),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(1.0, 0.0);
       const end = Offset.zero;

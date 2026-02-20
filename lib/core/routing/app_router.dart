@@ -13,6 +13,7 @@ import 'package:northpoint_church_app/features/volunteer/volunteer.dart';
 import 'package:northpoint_church_app/features/watch/watch.dart';
 import 'package:northpoint_church_app/features/events/event_model.dart';
 import 'package:flutter/material.dart';
+import 'transitions.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -20,22 +21,25 @@ final router = GoRouter(
     GoRoute(
       path: '/privacy',
       name: 'privacy',
-      builder: (context, state) => const PrivacyPolicyPage(),
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const PrivacyPolicyPage()),
     ),
     GoRoute(
       path: '/watch',
       name: 'watch',
-      builder: (context, state) => const LivestreamPage(),
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const LivestreamPage()),
     ),
     GoRoute(
       path: '/terms',
       name: 'terms',
-      builder: (context, state) => const TermsPage(),
+      pageBuilder: (context, state) => slideFromRight(child: const TermsPage()),
     ),
     GoRoute(
       path: '/events',
       name: 'events',
-      builder: (context, state) => const EventsPage(),
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const EventsPage()),
     ),
     GoRoute(
       path: '/event-details',
@@ -67,19 +71,25 @@ final router = GoRouter(
     GoRoute(
       path: '/volunteer',
       name: 'volunteer',
-      builder: (context, state) => const VolunteerPage(),
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const VolunteerPage()),
     ),
     GoRoute(
       path: '/tithe',
       name: 'tithe',
-      builder: (context, state) => TithePage(),
+      pageBuilder: (context, state) => slideFromRight(child: const TithePage()),
     ),
     GoRoute(
       path: '/settings',
       name: 'settings',
-      builder: (_, __) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(path: '/home', name: 'home', builder: (_, __) => const HomePage()),
-    GoRoute(path: '/prayer', name: 'prayer', builder: (_, __) => PrayerPage()),
+    GoRoute(
+      path: '/prayer',
+      name: 'prayer',
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const PrayerPage()),
+    ),
   ],
 );
