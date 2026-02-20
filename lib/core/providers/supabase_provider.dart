@@ -29,4 +29,5 @@ abstract class SupabaseProvider {
     Map<String, dynamic> body,
   );
   Future<List<Event>> fetchEvents();
+  Future<List<Event>> fetchNumberOfEvents(int number);
 }

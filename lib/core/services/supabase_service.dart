@@ -156,12 +156,23 @@ class SupabaseService extends SupabaseProvider {
     return response;
   }
 
+  @override
   Future<List<Event>> fetchEvents() async {
     final response = await client
         .from('event_feed')
         .select()
         .order('starts_at', ascending: true);
 
+    return response.map((e) => Event.fromMap(e)).toList();
+  }
+
+  @override
+  Future<List<Event>> fetchNumberOfEvents(int number) async {
+    final response = await client
+        .from('event_feed')
+        .select()
+        .order('starts_at', ascending: true)
+        .limit(number);
 
     return response.map((e) => Event.fromMap(e)).toList();
   }

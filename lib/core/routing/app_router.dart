@@ -69,20 +69,20 @@ final router = GoRouter(
       name: 'splash',
       builder: (context, state) => const SplashPage(),
     ),
-    GoRoute(
-      path: '/login',
-      name: 'login',
-      pageBuilder: (context, state) {
-        return slideFromRight(child: const LoginPage());
-      },
-    ),
-    GoRoute(
-      path: "/signup",
-      name: "signup",
-      pageBuilder: (context, state) {
-        return slideFromRight(child: const SignupPage());
-      },
-    ),
+    // GoRoute(
+    //   path: '/login',
+    //   name: 'login',
+    //   pageBuilder: (context, state) {
+    //     return slideFromRight(child: const LoginPage());
+    //   },
+    // ),
+    // GoRoute(
+    //   path: "/signup",
+    //   name: "signup",
+    //   pageBuilder: (context, state) {
+    //     return slideFromRight(child: const SignupPage());
+    //   },
+    // ),
     GoRoute(
       path: '/help',
       name: 'help',
@@ -93,12 +93,17 @@ final router = GoRouter(
       name: 'tithe',
       builder: (context, state) => TithePage(),
     ),
-    GoRoute(path: '/home', name: 'home', builder: (_, __) => const HomePage()),
     GoRoute(
-      path: '/profile',
-      name: 'profile',
-      builder: (_, __) => ProfilePage(),
+      path: '/settings',
+      name: 'settings',
+      builder: (_, __) => SettingsPage(),
     ),
+    GoRoute(path: '/home', name: 'home', builder: (_, __) => const HomePage()),
+    // GoRoute(
+    //   path: '/profile',
+    //   name: 'profile',
+    //   builder: (_, __) => ProfilePage(),
+    // ),
     GoRoute(path: '/prayer', name: 'prayer', builder: (_, __) => PrayerPage()),
   ],
 );
