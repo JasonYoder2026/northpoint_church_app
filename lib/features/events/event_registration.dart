@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:go_router/go_router.dart';
+import '../global_widgets/app_bar.dart';
 
 class EventRegistrationPage extends StatefulWidget {
   final String url;
@@ -43,8 +44,9 @@ class _EventRegistrationPageState extends State<EventRegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Event Registration'),
+      appBar: GradientAppBar(
+        title: 'Event Registration',
+        toolbarHeight: 40,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.pop(),
