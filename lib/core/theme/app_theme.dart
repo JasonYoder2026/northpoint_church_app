@@ -66,6 +66,7 @@ class AppTheme {
   static ThemeData get dark {
     final colorScheme = ColorScheme(
       primary: AppColors.primary,
+      inversePrimary: AppColors.primaryGradient,
       secondary: AppColors.secondary,
       surface: AppColors.darkSurface,
       error: Colors.red,
