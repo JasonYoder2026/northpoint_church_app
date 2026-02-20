@@ -11,70 +11,89 @@ class EventDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = EventController();
+
     return Scaffold(
-      appBar: AppBar(title: Text(event.title)),
-      body: Scrollbar(
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (event.imageUrl != null) Image.network(event.imageUrl!),
-              SizedBox(height: 12),
-              Text(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            pinned: true,
+            backgroundColor: Colors.black,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => context.pop(),
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
                 event.title,
-                style: TextStyle(
-                  fontSize: 24,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).textTheme.headlineLarge?.color,
                 ),
               ),
-              Text(
-                controller.formatDateTime(event),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.headlineLarge?.color,
-                ),
-              ),
-              if (event.registrationUrl != null) ...[
-                SizedBox(height: 8),
-                InkWell(
-                  onTap: () => context.push(
-                    '/event-registration',
-                    extra: event.registrationUrl!,
-                  ),
-                  child: Text(
-                    'Click To Register',
+              background: event.imageUrl != null
+                  ? Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.network(event.imageUrl!, fit: BoxFit.cover),
+
+                        /// Dark overlay for readability
+                        Container(color: Colors.black.withOpacity(0.4)),
+                      ],
+                    )
+                  : Container(color: Colors.grey[300]),
+            ),
+          ),
+
+          /// 🔥 CONTENT
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    controller.formatDateTime(event),
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent, // indicate clickable
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
-                ),
-              ],
-              if (event.location != null) ...[
-                SizedBox(height: 8),
-                Text(
-                  "Location: ${event.location!}",
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headlineLarge?.color,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-              if (event.summary != null) ...[
-                SizedBox(height: 8),
-                Text(
-                  event.summary!,
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headlineLarge?.color,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ],
+
+                  if (event.registrationUrl != null) ...[
+                    const SizedBox(height: 12),
+                    InkWell(
+                      onTap: () => context.push(
+                        '/event-registration',
+                        extra: event.registrationUrl!,
+                      ),
+                      child: const Text(
+                        'Click To Register',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+
+                  if (event.location != null) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      "Location: ${event.location!}",
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+
+                  if (event.summary != null) ...[
+                    const SizedBox(height: 16),
+                    Text(event.summary!, style: const TextStyle(height: 1.5)),
+                  ],
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
