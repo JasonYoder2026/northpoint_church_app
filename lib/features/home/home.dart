@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
       route: '/volunteer',
     ),
     GridButtonData(icon: Icons.video_library, text: 'Watch', route: '/watch'),
-    GridButtonData(icon: Icons.payment, text: 'Tithe', route: '/tithe'),
+    GridButtonData(icon: Icons.payment, text: 'Give', route: '/tithe'),
     GridButtonData(
       icon: Icons.message_rounded,
       text: 'Prayer',
