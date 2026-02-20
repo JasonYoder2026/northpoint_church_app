@@ -7,7 +7,6 @@ import 'package:northpoint_church_app/features/splash/splash_page.dart';
 import 'package:northpoint_church_app/features/home/home.dart';
 import 'package:northpoint_church_app/features/settings/settings.dart';
 import 'package:northpoint_church_app/features/tithe/tithe.dart';
-import 'package:northpoint_church_app/features/help/help.dart';
 import 'package:northpoint_church_app/features/privacy/privacy.dart';
 import 'package:northpoint_church_app/features/terms/terms.dart';
 import 'package:northpoint_church_app/features/watch/watch.dart';
@@ -63,11 +62,6 @@ final router = GoRouter(
       path: '/',
       name: 'splash',
       builder: (context, state) => const SplashPage(),
-    ),
-    GoRoute(
-      path: '/help',
-      name: 'help',
-      builder: (context, state) => const HelpPage(),
     ),
     GoRoute(
       path: '/tithe',

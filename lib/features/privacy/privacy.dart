@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../global_widgets/app_bar.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({super.key});
@@ -7,14 +8,10 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: GradientAppBar(
+        toolbarHeight: 40,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.pop(),
         ),
       ),
@@ -22,6 +19,7 @@ class PrivacyPolicyPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Privacy Policy",
@@ -34,30 +32,26 @@ class PrivacyPolicyPage extends StatelessWidget {
               SizedBox(height: 8),
               Text(
                 '''
-Your privacy is important to us. This app collects only the information necessary to provide and improve our services:
+Your privacy is important to us.
 
 1. Information Collected
-   - Name and email when you sign up
-   - Profile pictures
-   - Problem reports submitted through the app
-   - Optional usage data for app improvement
+   This app does not require user accounts and does not collect or store personal information such as names, email addresses, or profile data.
 
-2. How We Use Your Information
-   - To provide and personalize your app experience
-   - To respond to support requests
-   - To improve app functionality
+   If you choose to submit forms (such as event signups or prayer requests), those submissions are handled directly through external services (e.g., Planning Center). Any information entered there is governed by their privacy policies.
+
+2. App Usage Data
+   The app may store limited technical information necessary for functionality, such as device push notification tokens. This information is not used to identify you personally.
 
 3. Data Sharing
-   - We will never sell your personal data.
-   - We may share information with service providers to help run the app (e.g., cloud storage).
+   We do not sell, rent, or trade personal information. Because we do not collect personal data within the app, there is no personal data to share.
 
 4. Security
-   - We take reasonable measures to protect your information.
+   We take reasonable measures to protect the integrity of the app and its data.
 
 5. Consent
-   - By using this app, you consent to this privacy policy.
+   By using this app, you agree to this privacy policy.
 
-Thank you for trusting us with your information.
+If you have questions about privacy, please contact the church directly.
             ''',
                 style: TextStyle(
                   fontSize: 14,
