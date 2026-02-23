@@ -132,6 +132,11 @@ class _QuickLinksSection extends StatelessWidget {
           onTap: () => context.push('/privacy'),
         ),
         ListTile(
+          title: const Text('Contact Us'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/contact'),
+        ),
+        ListTile(
           title: const Text('Find us on the web'),
           trailing: const Icon(Icons.open_in_new),
           onTap: _launchChurchSite,

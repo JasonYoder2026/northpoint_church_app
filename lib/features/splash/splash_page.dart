@@ -96,7 +96,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
             const SizedBox(height: 24),
 
             const Text(
-              "NorthPoint Muncie",
+              "NorthPoint Church",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
