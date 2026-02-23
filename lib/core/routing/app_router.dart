@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:northpoint_church_app/features/contact/contact.dart';
 import 'package:northpoint_church_app/features/events/event_detail.dart';
 import 'package:northpoint_church_app/features/events/event_registration.dart';
 import 'package:northpoint_church_app/features/events/events.dart';
@@ -23,6 +24,12 @@ final router = GoRouter(
       name: 'privacy',
       pageBuilder: (context, state) =>
           slideFromRight(child: const PrivacyPolicyPage()),
+    ),
+    GoRoute(
+      path: '/contact',
+      name: 'contact',
+      pageBuilder: (context, state) =>
+          slideFromRight(child: const ContactPage()),
     ),
     GoRoute(
       path: '/watch',
