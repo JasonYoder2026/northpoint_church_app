@@ -69,6 +69,8 @@ class _ReportProblemSectionState extends ConsumerState<ReportProblemSection> {
             onPressed: isSubmitting
                 ? null
                 : () async {
+                    FocusScope.of(context).unfocus();
+
                     await controller.submit(_controller.text);
 
                     // Check if widget is still mounted before using context/ref

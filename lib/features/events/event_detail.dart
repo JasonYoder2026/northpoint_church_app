@@ -95,6 +95,7 @@ class EventDetailPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(event.summary!, style: const TextStyle(height: 1.5)),
                   ],
+                  SizedBox(height: 15,)
                 ],
               ),
             ),
