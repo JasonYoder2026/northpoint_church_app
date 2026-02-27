@@ -43,7 +43,6 @@ class SettingsPage extends ConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(currentIndex: 1),
     );
   }
 }

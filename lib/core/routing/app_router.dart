@@ -3,6 +3,7 @@ import 'package:northpoint_church_app/features/contact/contact.dart';
 import 'package:northpoint_church_app/features/events/event_detail.dart';
 import 'package:northpoint_church_app/features/events/event_registration.dart';
 import 'package:northpoint_church_app/features/events/events.dart';
+import 'package:northpoint_church_app/features/global_widgets/main_screen.dart';
 import 'package:northpoint_church_app/features/prayer/prayer.dart';
 import 'package:northpoint_church_app/features/splash/splash_page.dart';
 import 'package:northpoint_church_app/features/home/home.dart';
@@ -86,12 +87,12 @@ final router = GoRouter(
       name: 'tithe',
       pageBuilder: (context, state) => slideFromRight(child: const TithePage()),
     ),
-    GoRoute(
-      path: '/settings',
-      name: 'settings',
-      builder: (context, state) => const SettingsPage(),
-    ),
-    GoRoute(path: '/home', name: 'home', builder: (_, __) => const HomePage()),
+    // GoRoute(
+    //   path: '/settings',
+    //   name: 'settings',
+    //   builder: (context, state) => const SettingsPage(),
+    // ),
+    GoRoute(path: '/home', name: 'home', builder: (_, __) => const MainScreen()),
     GoRoute(
       path: '/prayer',
       name: 'prayer',
