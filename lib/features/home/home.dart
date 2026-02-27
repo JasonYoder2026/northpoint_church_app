@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SizedBox(height: 50),
-          Image.asset('assets/images/logo.png', width: 180, height: 180),
+          Image.asset('assets/images/logo.png', width: 150, height: 150),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(

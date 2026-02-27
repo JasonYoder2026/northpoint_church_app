@@ -22,6 +22,7 @@ class _VideoViewState extends State<VideoView> {
       params: const YoutubePlayerParams(
         enableCaption: true,
         showFullscreenButton: true,
+        playsInline: true,
       ),
     );
   }
