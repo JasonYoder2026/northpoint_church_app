@@ -51,7 +51,13 @@ class _PrayerPageState extends State<PrayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+            Navigator.of(context).pop(); // swipe right → pop
+          }
+        },
+        child: Scaffold(
       appBar: GradientAppBar(
         toolbarHeight: 40,
         leading: IconButton(
@@ -60,6 +66,7 @@ class _PrayerPageState extends State<PrayerPage> {
         ),
       ),
       body: WebViewWidget(controller: controller),
+    )
     );
   }
 }

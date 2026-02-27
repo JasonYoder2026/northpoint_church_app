@@ -7,7 +7,13 @@ class TermsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+            Navigator.of(context).pop(); // swipe right → pop
+          }
+        },
+        child: Scaffold(
       appBar: GradientAppBar(
         toolbarHeight: 40,
         leading: IconButton(
@@ -59,6 +65,7 @@ Thank you for using the app responsibly.
           ),
         ),
       ),
+    )
     );
   }
 }

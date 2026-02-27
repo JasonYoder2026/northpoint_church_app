@@ -58,7 +58,13 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.displayMedium?.color;
 
-    return Scaffold(
+    return GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+            Navigator.of(context).pop(); // swipe right → pop
+          }
+        },
+        child: Scaffold(
       appBar: GradientAppBar(
         toolbarHeight: 40,
         leading: IconButton(
@@ -200,6 +206,7 @@ class ContactPage extends StatelessWidget {
           ],
         ),
       ),
+        )
     );
   }
 }

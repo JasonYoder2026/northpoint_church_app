@@ -12,7 +12,13 @@ class LivestreamPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(livestreamControllerProvider);
 
-    return Scaffold(
+    return GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+            Navigator.of(context).pop(); // swipe right → pop
+          }
+        },
+        child: Scaffold(
       appBar: GradientAppBar(
         toolbarHeight: 40,
         leading: IconButton(
@@ -38,6 +44,7 @@ class LivestreamPage extends ConsumerWidget {
 
         LivestreamError(:final message) => Center(child: Text(message)),
       },
+    )
     );
   }
 }

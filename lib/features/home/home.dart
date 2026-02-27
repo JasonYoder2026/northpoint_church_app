@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       appBar: const GradientAppBar(toolbarHeight: 35),
       body: Column(
         children: [
-          SizedBox(height: 50),
+          SizedBox(height: 25),
           Image.asset('assets/images/logo.png', width: 150, height: 150),
           Padding(
             padding: const EdgeInsets.all(16.0),

@@ -51,15 +51,22 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBar(
-        toolbarHeight: 40,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+          Navigator.of(context).pop(); // swipe right → pop
+        }
+      },
+      child: Scaffold(
+        appBar: GradientAppBar(
+          toolbarHeight: 40,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => context.pop(),
+          ),
         ),
+        body: WebViewWidget(controller: controller),
       ),
-      body: WebViewWidget(controller: controller),
     );
   }
 }

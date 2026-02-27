@@ -12,7 +12,13 @@ class EventDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = EventController();
 
-    return Scaffold(
+    return GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+            Navigator.of(context).pop(); // swipe right → pop
+          }
+        },
+        child: Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -95,6 +101,7 @@ class EventDetailPage extends StatelessWidget {
           ),
         ],
       ),
+        )
     );
   }
 }
