@@ -20,14 +20,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
+          onNavigationRequest: (request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
               return NavigationDecision.prevent;
             }
@@ -51,21 +44,34 @@ class _VolunteerPageState extends State<VolunteerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-          Navigator.of(context).pop(); // swipe right → pop
-        }
-      },
-      child: Scaffold(
-        appBar: GradientAppBar(
-          toolbarHeight: 40,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => context.pop(),
-          ),
+    return Scaffold(
+      appBar: GradientAppBar(
+        toolbarHeight: 40,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.pop(),
         ),
-        body: WebViewWidget(controller: controller),
+      ),
+      body: Stack(
+        children: [
+          WebViewWidget(controller: controller),
+          // Edge swipe detector for swipe-to-pop
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 20, // 20px from the left edge
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onHorizontalDragEnd: (details) {
+                if (details.primaryVelocity != null &&
+                    details.primaryVelocity! > 0) {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

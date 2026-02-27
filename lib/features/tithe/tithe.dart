@@ -18,31 +18,20 @@ class _TithePageState extends State<TithePage> {
     super.initState();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(
-        Uri.parse('https://app.easytithe.com/app/giving/northpointchurch'),
-      );
+      ..setNavigationDelegate(NavigationDelegate(
+        onNavigationRequest: (request) {
+          if (request.url.startsWith('https://www.youtube.com/')) {
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
+      ))
+      ..loadRequest(Uri.parse(
+          'https://app.easytithe.com/app/giving/northpointchurch'));
   }
 
   @override
   void dispose() {
-    // Clear any WebView data before disposal
     controller.clearCache();
     controller.clearLocalStorage();
     super.dispose();
@@ -50,22 +39,35 @@ class _TithePageState extends State<TithePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onHorizontalDragEnd: (details) {
-          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-            Navigator.of(context).pop(); // swipe right → pop
-          }
-        },
-        child: Scaffold(
+    return Scaffold(
       appBar: GradientAppBar(
         toolbarHeight: 40,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.pop(),
         ),
       ),
-      body: WebViewWidget(controller: controller),
-        )
+      body: Stack(
+        children: [
+          WebViewWidget(controller: controller),
+          // Invisible edge detector for swipe-to-pop
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 20, // only 20px from left edge
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onHorizontalDragEnd: (details) {
+                if (details.primaryVelocity != null &&
+                    details.primaryVelocity! > 0) {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
