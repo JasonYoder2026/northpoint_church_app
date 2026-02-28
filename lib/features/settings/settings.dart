@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
 import 'package:northpoint_church_app/features/settings/widgets/theme_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'widgets/settings_tile.dart';
 import 'widgets/report_problem.dart';
-import '../global_widgets/app_bar.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -14,7 +12,6 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: GradientAppBar(toolbarHeight: 35),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:northpoint_church_app/features/global_widgets/app_bar.dart';
 import '../home/home.dart';
 import '../settings/settings.dart';
 
@@ -13,10 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const SettingsPage(),
-  ];
+  final List<Widget> _pages = [const HomePage(), const SettingsPage()];
 
   void _onPageChanged(int index) {
     setState(() {
@@ -41,29 +39,29 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GradientAppBar(),
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
         children: _pages,
         physics: const BouncingScrollPhysics(),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 95,
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedItemColor: Theme.of(context).elevatedButtonTheme.style
-              ?.backgroundColor
-              ?.resolve({}) ??
-              Colors.blue,
-          onTap: _onNavBarTap,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onNavBarTap,
+        iconSize: 25,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor:
+            Theme.of(
+              context,
+            ).elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
+            Colors.blue,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+        ],
       ),
     );
   }

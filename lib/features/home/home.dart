@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:northpoint_church_app/features/global_widgets/nav_bar.dart';
-import 'package:northpoint_church_app/features/global_widgets/app_bar.dart';
 import 'widgets/grid_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GradientAppBar(toolbarHeight: 35),
       body: Column(
         children: [
           SizedBox(height: 25),
