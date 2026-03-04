@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: _gridButtons.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
                 itemBuilder: (context, index) => GridButton(btnData: _gridButtons[index]),
