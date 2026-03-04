@@ -31,9 +31,9 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SizedBox(height: 25),
-          Image.asset('assets/images/logo.png', width: 200, height: 200),
+          Image.asset('assets/images/logo.png', width: 175, height: 175),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               'We\'re so glad you\'re here!',
               style: TextStyle(
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SizedBox(height: 35),
+          SizedBox(height: 15),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
