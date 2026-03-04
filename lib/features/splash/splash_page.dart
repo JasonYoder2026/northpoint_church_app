@@ -71,7 +71,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
     });
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

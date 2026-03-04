@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary brand color (logo color)
   static const primary = Color(0xFF006F64);
-  static const primaryGradient = Color.fromARGB(159, 65, 121, 63);
+  static const primaryGradient = Color.fromARGB(255, 54, 129, 67);
 
   // Secondary green
   static const secondary = Color(0xFF9BBDA9);

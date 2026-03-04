@@ -23,15 +23,6 @@ class _GridButtonState extends State<GridButton> {
 
   @override
   Widget build(BuildContext context) {
-    final gradient = LinearGradient(
-      colors: [
-        Theme.of(context).colorScheme.primary.withOpacity(0.9),
-        Theme.of(context).colorScheme.inversePrimary,
-      ],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-      stops: const [0.60, 0.95],
-    );
 
     return GestureDetector(
       onTapDown: (_) => setState(() => _pressed = true),
@@ -47,7 +38,7 @@ class _GridButtonState extends State<GridButton> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
-            gradient: gradient,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(16),
             boxShadow: const [
               BoxShadow(

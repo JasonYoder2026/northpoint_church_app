@@ -49,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: _onNavBarTap,
+        indicatorColor: Theme.of(context).colorScheme.primary,
         height: 50,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
