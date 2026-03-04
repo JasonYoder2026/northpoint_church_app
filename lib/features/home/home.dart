@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SizedBox(height: 25),
-          Image.asset('assets/images/logo.png', width: 150, height: 150),
+          Image.asset('assets/images/logo.png', width: 200, height: 200),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -43,38 +43,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // GridView inside Expanded to fill remaining space
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  /// 🔥 HERO BUTTON
-                  Center(child: GridButton(btnData: _gridButtons[0])),
-
-                  const SizedBox(height: 25),
-
-                  /// Middle Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GridButton(btnData: _gridButtons[1]),
-                      GridButton(btnData: _gridButtons[2]),
-                    ],
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  /// Bottom Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GridButton(btnData: _gridButtons[3]),
-                      GridButton(btnData: _gridButtons[4]),
-                    ],
-                  ),
-                ],
+              child: ListView.separated(
+                itemCount: _gridButtons.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                itemBuilder: (context, index) => GridButton(btnData: _gridButtons[index]),
               ),
             ),
           ),

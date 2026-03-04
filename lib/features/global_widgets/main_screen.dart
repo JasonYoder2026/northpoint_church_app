@@ -46,21 +46,14 @@ class _MainScreenState extends State<MainScreen> {
         children: _pages,
         physics: const BouncingScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onNavBarTap,
-        iconSize: 25,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            Theme.of(
-              context,
-            ).elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
-            Colors.blue,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: _onNavBarTap,
+        height: 50,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

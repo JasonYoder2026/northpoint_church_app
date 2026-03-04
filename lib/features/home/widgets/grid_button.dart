@@ -11,9 +11,8 @@ class GridButtonData {
 
 class GridButton extends StatefulWidget {
   final GridButtonData btnData;
-  final double size;
 
-  const GridButton({super.key, required this.btnData, this.size = 110});
+  const GridButton({super.key, required this.btnData});
 
   @override
   State<GridButton> createState() => _GridButtonState();
@@ -31,7 +30,7 @@ class _GridButtonState extends State<GridButton> {
       ],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight,
-      stops: [0.60, 0.95],
+      stops: const [0.60, 0.95],
     );
 
     return GestureDetector(
@@ -42,49 +41,44 @@ class _GridButtonState extends State<GridButton> {
       },
       onTapCancel: () => setState(() => _pressed = false),
       child: AnimatedScale(
-        scale: _pressed ? 0.95 : 1.0,
+        scale: _pressed ? 0.97 : 1.0,
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeOut,
         child: Container(
-          width: widget.size,
-          height: widget.size,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
             gradient: gradient,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
-                offset: const Offset(2, 4),
-                blurRadius: 6,
-              ),
-              BoxShadow(
-                color: Colors.white.withOpacity(0.2),
-                offset: const Offset(-2, -2),
+                offset: Offset(2, 4),
                 blurRadius: 6,
               ),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
             children: [
-              Icon(widget.btnData.icon, size: 38, color: Colors.white),
-              const SizedBox(height: 8),
-              Text(
-                widget.btnData.text,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 2,
-                      color: Colors.black38,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+              Icon(widget.btnData.icon, size: 30, color: Colors.white),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  widget.btnData.text,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 2,
+                        color: Colors.black38,
+                        offset: Offset(1, 1),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 24),
             ],
           ),
         ),
