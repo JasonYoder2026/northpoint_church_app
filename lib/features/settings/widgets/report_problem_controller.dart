@@ -37,7 +37,6 @@ class ProblemReportController extends Notifier<ProblemReportState> {
 
       state = state.copyWith(status: ReportStatus.success);
     } catch (e) {
-      print(e);
       state = state.copyWith(
         status: ReportStatus.error,
         error: 'Failed to submit report. Please try again.',

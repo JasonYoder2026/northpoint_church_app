@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoView extends StatefulWidget {
   final String videoId;
@@ -17,41 +17,38 @@ class _VideoViewState extends State<VideoView> {
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController.fromVideoId(
-      videoId: widget.videoId,
-      params: const YoutubePlayerParams(
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoId,
+      flags: const YoutubePlayerFlags(
         enableCaption: true,
-        showFullscreenButton: true,
-        playsInline: true,
+        controlsVisibleAtStart: true,
       ),
     );
   }
 
   @override
   void dispose() {
-    _controller.close();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayerScaffold(
-      controller: _controller,
-      aspectRatio: 16 / 9,
-      builder: (context, player) {
-        return Column(
-          children: [
-            player,
-            const SizedBox(height: 10),
-            Text(
-              widget.label,
-              style: TextStyle(
-                color: Theme.of(context).textTheme.displayMedium?.color,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        YoutubePlayer(
+          controller: _controller,
+          aspectRatio: 16 / 9,
+          showVideoProgressIndicator: true,
+        ),
+        const SizedBox(height: 10),
+        Text(
+          widget.label,
+          style: TextStyle(
+            color: Theme.of(context).textTheme.displayMedium?.color,
+          ),
+        ),
+      ],
     );
   }
 }
