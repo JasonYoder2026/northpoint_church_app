@@ -4,8 +4,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoView extends StatefulWidget {
   final String videoId;
   final String label;
+  final bool isLive;
 
-  const VideoView({super.key, required this.videoId, required this.label});
+  const VideoView({super.key, required this.videoId, required this.label, required this.isLive});
 
   @override
   State<VideoView> createState() => _VideoViewState();
@@ -19,9 +20,10 @@ class _VideoViewState extends State<VideoView> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
-      flags: const YoutubePlayerFlags(
+      flags: YoutubePlayerFlags(
         enableCaption: true,
         controlsVisibleAtStart: true,
+        isLive: widget.isLive
       ),
     );
   }
@@ -35,6 +37,7 @@ class _VideoViewState extends State<VideoView> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         YoutubePlayer(
           controller: _controller,
@@ -44,6 +47,7 @@ class _VideoViewState extends State<VideoView> {
         const SizedBox(height: 10),
         Text(
           widget.label,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Theme.of(context).textTheme.displayMedium?.color,
           ),

@@ -31,7 +31,7 @@ class LivestreamPage extends ConsumerWidget {
 
         LivestreamLive(:final videoId) => Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-          child: VideoView(videoId: videoId, label: ''),
+          child: VideoView(videoId: videoId, label: '', isLive: true),
         ),
 
         LivestreamOffline(:final videoId) => Padding(
@@ -39,6 +39,7 @@ class LivestreamPage extends ConsumerWidget {
           child: VideoView(
             videoId: videoId,
             label: "We're not live right now — check out our latest service!",
+            isLive: false
           ),
         ),
 
