@@ -23,7 +23,8 @@ class _VideoViewState extends State<VideoView> {
       flags: YoutubePlayerFlags(
         enableCaption: true,
         controlsVisibleAtStart: true,
-        isLive: widget.isLive
+        autoPlay:false,
+        isLive: widget.isLive,
       ),
     );
   }
@@ -36,23 +37,34 @@ class _VideoViewState extends State<VideoView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        YoutubePlayer(
-          controller: _controller,
-          aspectRatio: 16 / 9,
-          showVideoProgressIndicator: true,
-        ),
-        const SizedBox(height: 10),
-        Text(
-          widget.label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.displayMedium?.color,
-          ),
-        ),
-      ],
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: _controller,
+        aspectRatio: 16 / 9,
+        showVideoProgressIndicator: true,
+        bottomActions: [
+          CurrentPosition(),
+          ProgressBar(isExpanded: true,),
+          RemainingDuration(),
+          PlaybackSpeedButton(),
+        ],
+      ),
+      builder: (context, player) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            player,
+            const SizedBox(height: 10),
+            Text(
+              widget.label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.displayMedium?.color,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
