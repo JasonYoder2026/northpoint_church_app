@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'widgets/grid_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       route: '/volunteer',
     ),
     GridButtonData(icon: Icons.video_library, text: 'Watch', route: '/watch'),
-    GridButtonData(icon: Icons.payment, text: 'Give', route: '/tithe'),
+    GridButtonData(icon: Icons.payment, text: 'Give', route: '', onTap: _openGiving),
     GridButtonData(
       icon: Icons.message_rounded,
       text: 'Prayer',
@@ -51,12 +52,23 @@ class _HomePageState extends State<HomePage> {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: _gridButtons.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) => GridButton(btnData: _gridButtons[index]),
+                itemBuilder: (context, index) {
+                  return GridButton(btnData: _gridButtons[index]);
+                },
               ),
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+Future<void> _openGiving() async {
+  final Uri url =
+  Uri.parse('https://app.easytithe.com/app/giving/northpointchurch');
+
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch giving page');
   }
 }

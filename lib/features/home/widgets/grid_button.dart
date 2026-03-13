@@ -5,8 +5,9 @@ class GridButtonData {
   final IconData icon;
   final String text;
   final String route;
+  final VoidCallback? onTap;
 
-  GridButtonData({required this.icon, required this.text, required this.route});
+  GridButtonData({required this.icon, required this.text, required this.route, this.onTap});
 }
 
 class GridButton extends StatefulWidget {
@@ -28,7 +29,12 @@ class _GridButtonState extends State<GridButton> {
       onTapDown: (_) => setState(() => _pressed = true),
       onTapUp: (_) {
         setState(() => _pressed = false);
-        context.push(widget.btnData.route);
+
+        if (widget.btnData.onTap != null) {
+          widget.btnData.onTap!();
+        } else {
+          context.push(widget.btnData.route);
+        }
       },
       onTapCancel: () => setState(() => _pressed = false),
       child: AnimatedScale(
