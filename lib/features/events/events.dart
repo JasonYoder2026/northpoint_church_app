@@ -83,7 +83,6 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      height: 200, // taller card
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
@@ -96,52 +95,51 @@ class EventCard extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Background image
-            if (event.imageUrl != null)
-              Positioned.fill(
-                child: Image.network(event.imageUrl!, fit: BoxFit.cover),
-              )
-            else
-              Container(color: Colors.grey[300]),
 
-            // Bottom overlay
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 80, // bottom half height
-              child: Container(
-                color: Colors.white.withOpacity(0.95),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      event.title,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+            // IMAGE SECTION
+            SizedBox(
+              height: 220,
+              width: double.infinity,
+              child: event.imageUrl != null
+                  ? Image.network(
+                event.imageUrl!,
+                fit: BoxFit.scaleDown,
+              )
+                  : Container(color: Colors.grey[300]),
+            ),
+
+            // WHITE INFO SECTION
+            Container(
+              width: double.infinity,
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      controller.formatDateTime(event),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87,
-                      ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    controller.formatDateTime(event),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -149,4 +147,5 @@ class EventCard extends StatelessWidget {
       ),
     );
   }
+
 }
