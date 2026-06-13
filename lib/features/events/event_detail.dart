@@ -13,96 +13,96 @@ class EventDetailPage extends StatelessWidget {
     final controller = EventController();
 
     return GestureDetector(
-        onHorizontalDragEnd: (details) {
-          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-            Navigator.of(context).pop(); // swipe right → pop
-          }
-        },
-        child: Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 200,
-            pinned: true,
-            backgroundColor: Colors.black,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => context.pop(),
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                event.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+          Navigator.of(context).pop(); // swipe right → pop
+        }
+      },
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 200,
+              pinned: true,
+              backgroundColor: Colors.black,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => context.pop(),
               ),
-              background: event.imageUrl != null
-                  ? Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Image.network(event.imageUrl!, fit: BoxFit.cover),
-
-                        /// Dark overlay for readability
-                        Container(color: Colors.black.withOpacity(0.4)),
-                      ],
-                    )
-                  : Container(color: Colors.grey[300]),
-            ),
-          ),
-
-          /// 🔥 CONTENT
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    controller.formatDateTime(event),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).textTheme.bodyLarge?.color,
-                    ),
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+                  event.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+                background: event.imageUrl != null
+                    ? Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Image.network(event.imageUrl!, fit: BoxFit.cover),
 
-                  if (event.registrationUrl != null) ...[
-                    const SizedBox(height: 12),
-                    InkWell(
-                      onTap: () => context.push(
-                        '/event-registration',
-                        extra: event.registrationUrl!,
+                          /// Dark overlay for readability
+                          Container(color: Colors.black.withValues(alpha: 0.4)),
+                        ],
+                      )
+                    : Container(color: Colors.grey[300]),
+              ),
+            ),
+
+            /// 🔥 CONTENT
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      controller.formatDateTime(event),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
-                      child: const Text(
-                        'Click To Register',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
+                    ),
+
+                    if (event.registrationUrl != null) ...[
+                      const SizedBox(height: 12),
+                      InkWell(
+                        onTap: () => context.push(
+                          '/event-registration',
+                          extra: event.registrationUrl!,
+                        ),
+                        child: const Text(
+                          'Click To Register',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueAccent,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
 
-                  if (event.location != null) ...[
-                    const SizedBox(height: 12),
-                    Text(
-                      "Location: ${event.location!}",
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ],
+                    if (event.location != null) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        "Location: ${event.location!}",
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ],
 
-                  if (event.summary != null) ...[
-                    const SizedBox(height: 16),
-                    Text(event.summary!, style: const TextStyle(height: 1.5)),
+                    if (event.summary != null) ...[
+                      const SizedBox(height: 16),
+                      Text(event.summary!, style: const TextStyle(height: 1.5)),
+                    ],
+                    SizedBox(height: 15),
                   ],
-                  SizedBox(height: 15,)
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-        )
     );
   }
 }

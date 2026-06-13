@@ -42,33 +42,33 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onHorizontalDragEnd: (details) {
-          if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-            Navigator.of(context).pop(); // swipe right → pop
-          }
-        },
-        child: Scaffold(
-      appBar: GradientAppBar(
-        toolbarHeight: 40,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+          Navigator.of(context).pop(); // swipe right → pop
+        }
+      },
+      child: Scaffold(
+        appBar: GradientAppBar(
+          toolbarHeight: 40,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => context.pop(),
+          ),
+          title: 'Upcoming Events',
         ),
-        title: 'Upcoming Events',
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: events.length,
+                itemBuilder: (context, index) {
+                  final event = events[index];
+                  return GestureDetector(
+                    onTap: () => context.push("/event-details", extra: event),
+                    child: EventCard(event: event, controller: controller),
+                  );
+                },
+              ),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: events.length,
-              itemBuilder: (context, index) {
-                final event = events[index];
-                return GestureDetector(
-                  onTap: () => context.push("/event-details", extra: event),
-                  child: EventCard(event: event, controller: controller),
-                );
-              },
-            ),
-        )
     );
   }
 }
@@ -87,7 +87,7 @@ class EventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -98,16 +98,12 @@ class EventCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // IMAGE SECTION
             SizedBox(
               height: 220,
               width: double.infinity,
               child: event.imageUrl != null
-                  ? Image.network(
-                event.imageUrl!,
-                fit: BoxFit.scaleDown,
-              )
+                  ? Image.network(event.imageUrl!, fit: BoxFit.scaleDown)
                   : Container(color: Colors.grey[300]),
             ),
 
@@ -115,10 +111,7 @@ class EventCard extends StatelessWidget {
             Container(
               width: double.infinity,
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -134,10 +127,7 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     controller.formatDateTime(event),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
                   ),
                 ],
               ),
@@ -147,5 +137,4 @@ class EventCard extends StatelessWidget {
       ),
     );
   }
-
 }
