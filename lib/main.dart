@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 
 final getIt = GetIt.instance;
@@ -36,6 +37,16 @@ Future<void> setupDependencies() async {
   );
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  final settings = await FirebaseMessaging.instance.requestPermission();
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+
+    if (fcmToken != null) {
+      await FirebaseMessaging.instance.subscribeToTopic('all_users');
+    }
+  }
 
   final supabase = Supabase.instance.client;
 
