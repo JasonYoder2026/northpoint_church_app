@@ -8,6 +8,8 @@ import 'core/services/supabase_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final getIt = GetIt.instance;
 
@@ -32,6 +34,8 @@ Future<void> setupDependencies() async {
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_PUBLISHABLE']!,
   );
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final supabase = Supabase.instance.client;
 
