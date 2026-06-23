@@ -50,18 +50,18 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC_7DvB6I1rdrIvb6qZDAkkk0atNljE-dw',
-    appId: '1:994270580207:android:28a6feff1aedfde786ba1a',
-    messagingSenderId: '994270580207',
-    projectId: 'northpoint-notifications',
-    storageBucket: 'northpoint-notifications.firebasestorage.app',
+    apiKey: 'AIzaSyDoXQ0nbY5tnCheguQG22lh24m43sq-oJ0',
+    appId: '1:796746744177:android:cc44e5f45a21570df7b6d0',
+    messagingSenderId: '796746744177',
+    projectId: 'np-notifications-24496',
+    storageBucket: 'np-notifications-24496.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCYcURPR-iGQh3XWamY6yVLI69O7cOhsjw',
-    appId: '1:994270580207:ios:9cf39702aefac49e86ba1a',
-    messagingSenderId: '994270580207',
-    projectId: 'northpoint-notifications',
-    storageBucket: 'northpoint-notifications.firebasestorage.app',
+    apiKey: 'AIzaSyAvDjkX0t7_wcjf0jfeJGPN7iUGrAnl2Ic',
+    appId: '1:796746744177:ios:8d494ecde21f1d1bf7b6d0',
+    messagingSenderId: '796746744177',
+    projectId: 'np-notifications-24496',
+    storageBucket: 'np-notifications-24496.firebasestorage.app',
     iosBundleId: 'com.northpointmuncie.churchapp',
   );
 }

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "994270580207",
-    "project_id": "northpoint-notifications",
-    "storage_bucket": "northpoint-notifications.firebasestorage.app"
+    "project_number": "796746744177",
+    "project_id": "np-notifications-24496",
+    "storage_bucket": "np-notifications-24496.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:994270580207:android:28a6feff1aedfde786ba1a",
+        "mobilesdk_app_id": "1:796746744177:android:cc44e5f45a21570df7b6d0",
         "android_client_info": {
           "package_name": "com.northpointmuncie.churchapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC_7DvB6I1rdrIvb6qZDAkkk0atNljE-dw"
+          "current_key": "AIzaSyDoXQ0nbY5tnCheguQG22lh24m43sq-oJ0"
         }
       ],
       "services": {
