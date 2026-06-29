@@ -3,13 +3,42 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:northpoint_church_app/core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'package:northpoint_church_app/core/theme/theme_controller.dart';
+import 'package:get_it/get_it.dart';
+import 'package:northpoint_church_app/core/services/message_handler.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-class App extends ConsumerWidget {
+final getIt = GetIt.instance;
+
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<App> createState() => _AppState();
+}
+
+class _AppState extends ConsumerState<App> {
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      getIt<MessageHandler>().handle(message.data);
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        getIt<MessageHandler>().handle(message.data);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final themeMode = ref.watch(themeControllerProvider);
+
+    if (!getIt.isRegistered<MessageHandler>()) {
+      getIt.registerSingleton(MessageHandler(router));
+    }
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

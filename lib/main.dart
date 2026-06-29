@@ -51,16 +51,10 @@ Future<void> setupDependencies() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-    print('APNS TOKEN: $apnsToken');
     final fcmToken = await FirebaseMessaging.instance.getToken();
-    print("TOKEN: ${fcmToken.toString()}");
     if (fcmToken != null) {
       await FirebaseMessaging.instance.subscribeToTopic('all_users');
     }
-    FirebaseMessaging.onMessage.listen((message) {
-      print('Received message: ${message.notification?.title}');
-    });
   }
 
   final supabase = Supabase.instance.client;
