@@ -21,6 +21,10 @@ class _AppState extends ConsumerState<App> {
   void initState() {
     super.initState();
 
+    if (!getIt.isRegistered<MessageHandler>()) {
+      getIt.registerSingleton(MessageHandler(router));
+    }
+
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       getIt<MessageHandler>().handle(message.data);
     });
@@ -35,10 +39,6 @@ class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeControllerProvider);
-
-    if (!getIt.isRegistered<MessageHandler>()) {
-      getIt.registerSingleton(MessageHandler(router));
-    }
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
