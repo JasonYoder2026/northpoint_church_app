@@ -44,7 +44,7 @@ class _EventsPageState extends State<EventsPage> {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-          Navigator.of(context).pop(); // swipe right → pop
+          Navigator.of(context).pop();
         }
       },
       child: Scaffold(

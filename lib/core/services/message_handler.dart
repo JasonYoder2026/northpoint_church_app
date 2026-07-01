@@ -13,16 +13,16 @@ class MessageHandler {
     if (type == null || value == null) return;
 
     switch (type) {
-      case 'screen':
-        router.go(value);
-        break;
-
       case 'url':
         final uri = Uri.parse(value);
 
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         }
+        break;
+
+      case 'event':
+        router.go('events');
         break;
 
       default:
