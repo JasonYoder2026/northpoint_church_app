@@ -9,12 +9,17 @@ class MessageHandler {
   Future<void> handle(Map<String, dynamic> data) async {
     final type = data['type'] as String?;
     final value = data['value'] as String?;
+    print("Type: ${type}");
 
-    if (type == null || value == null) return;
+    if (type == null ||
+        ((type == 'url' || type == 'youtube') && value == null)) {
+      return;
+    }
 
     switch (type) {
       case 'url':
-        final uri = Uri.parse(value);
+      case 'youtube':
+        final uri = Uri.parse(value!);
 
         if (await canLaunchUrl(uri)) {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -22,11 +27,11 @@ class MessageHandler {
         break;
 
       case 'event':
-        router.go('events');
+        router.go('/events');
         break;
 
       default:
-        router.go('home');
+        router.go('/home');
         break;
     }
   }

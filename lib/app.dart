@@ -24,7 +24,6 @@ class _AppState extends ConsumerState<App> {
     if (!getIt.isRegistered<MessageHandler>()) {
       getIt.registerSingleton(MessageHandler(router));
     }
-
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       getIt<MessageHandler>().handle(message.data);
     });
