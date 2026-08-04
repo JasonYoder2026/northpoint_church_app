@@ -5,13 +5,6 @@
     "dart-code.flutter",
     "dart-code.dart-code"
   ],
-  "forwardPorts": [3000],
-  "portsAttributes": {
-    "3000": {
-      "label": "Flutter Web App",
-      "onAutoForward": "openPreview"
-    }
-  },
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   }
