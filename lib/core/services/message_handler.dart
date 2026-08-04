@@ -9,7 +9,6 @@ class MessageHandler {
   Future<void> handle(Map<String, dynamic> data) async {
     final type = data['type'] as String?;
     final value = data['value'] as String?;
-    print("Type: ${type}");
 
     if (type == null ||
         ((type == 'url' || type == 'youtube') && value == null)) {
