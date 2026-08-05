@@ -15,7 +15,11 @@ class EventDetailPage extends StatelessWidget {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-          Navigator.of(context).pop(); // swipe right → pop
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go('/events');
+          }
         }
       },
       child: Scaffold(
@@ -27,7 +31,12 @@ class EventDetailPage extends StatelessWidget {
               backgroundColor: Colors.black,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => context.pop(),
+                onPressed: () => {
+                  if (context.canPop())
+                    {context.pop()}
+                  else
+                    {context.go('/events')},
+                },
               ),
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(
@@ -43,7 +52,6 @@ class EventDetailPage extends StatelessWidget {
                         children: [
                           Image.network(event.imageUrl!, fit: BoxFit.cover),
 
-                          /// Dark overlay for readability
                           Container(color: Colors.black.withValues(alpha: 0.4)),
                         ],
                       )

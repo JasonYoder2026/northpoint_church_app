@@ -1,10 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
+import 'package:northpoint_church_app/features/events/event_model.dart';
 
 class MessageHandler {
   final GoRouter router;
+  final SupabaseProvider supabase;
 
-  MessageHandler(this.router);
+  MessageHandler(this.router, this.supabase);
 
   Future<void> handle(Map<String, dynamic> data) async {
     final type = data['type'] as String?;
@@ -26,8 +29,12 @@ class MessageHandler {
         break;
 
       case 'event':
+        final Event? event = await supabase.fetchEventById(value!);
+        if (event != null) {
+          router.go('/event-details', extra: event);
+          break;
+        }
         router.go('/events');
-        break;
 
       default:
         router.go('/home');

@@ -173,4 +173,15 @@ class SupabaseService extends SupabaseProvider {
 
     return response.map((e) => Event.fromMap(e)).toList();
   }
+
+  @override
+  Future<Event?> fetchEventById(String id) async {
+    final response = await client
+        .from('event_feed')
+        .select()
+        .eq('instance_id', id)
+        .single();
+
+    return Event.fromMap(response);
+  }
 }

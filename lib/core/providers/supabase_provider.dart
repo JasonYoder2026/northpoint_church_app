@@ -30,4 +30,5 @@ abstract class SupabaseProvider {
   );
   Future<List<Event>> fetchEvents();
   Future<List<Event>> fetchNumberOfEvents(int number);
+  Future<Event?> fetchEventById(String id);
 }

@@ -53,7 +53,7 @@ Future<void> setupDependencies() async {
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
     final fcmToken = await FirebaseMessaging.instance.getToken();
     if (fcmToken != null) {
-      await FirebaseMessaging.instance.subscribeToTopic('all_users');
+      await FirebaseMessaging.instance.subscribeToTopic('test');
     }
   }
 

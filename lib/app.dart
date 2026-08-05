@@ -6,6 +6,7 @@ import 'package:northpoint_church_app/core/theme/theme_controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:northpoint_church_app/core/services/message_handler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:northpoint_church_app/core/providers/supabase_provider.dart';
 
 final getIt = GetIt.instance;
 
@@ -22,7 +23,9 @@ class _AppState extends ConsumerState<App> {
     super.initState();
 
     if (!getIt.isRegistered<MessageHandler>()) {
-      getIt.registerSingleton(MessageHandler(router));
+      getIt.registerSingleton(
+        MessageHandler(router, GetIt.instance<SupabaseProvider>()),
+      );
     }
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       getIt<MessageHandler>().handle(message.data);
