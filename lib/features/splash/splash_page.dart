@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'splash_state.dart';
 import 'dart:math';
 
+bool shouldNavigateToHome(String location) => location == '/';
+
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
@@ -66,7 +68,10 @@ class _SplashPageState extends ConsumerState<SplashPage>
 
     ref.listen<SplashState>(splashControllerProvider, (prev, next) {
       if (next.status == SplashStatus.ready) {
-        context.go('/home');
+        final currentLocation = GoRouter.of(context).state.matchedLocation;
+        if (shouldNavigateToHome(currentLocation)) {
+          context.go('/home');
+        }
       }
     });
 

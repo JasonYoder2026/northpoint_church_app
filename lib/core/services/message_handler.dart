@@ -34,10 +34,9 @@ class MessageHandler {
           router.go('/event-details', extra: event);
           break;
         }
-        router.go('/events');
 
       default:
-        router.go('/home');
+        router.go('/events');
         break;
     }
   }
